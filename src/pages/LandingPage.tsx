@@ -16,10 +16,9 @@ import { useRef } from 'react';
 export default function LandingPage() {
   const { scrollY } = useScroll();
   
-  // Parallax Transformasyonları
-  const heroBgY = useTransform(scrollY, [0, 1000], ['0%', '30%']);
-  const heroContentY = useTransform(scrollY, [0, 1000], ['0%', '15%']);
-  const heroOpacity = useTransform(scrollY, [0, 500], [1, 0]);
+  // Parallax Transformasyonları (Hafifletilmiş)
+  const heroBgY = useTransform(scrollY, [0, 1000], ['0%', '15%']);
+  const heroContentY = useTransform(scrollY, [0, 1000], ['0%', '5%']);
 
   return (
     <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 font-['Inter'] selection:bg-blue-200 dark:selection:bg-blue-900 transition-colors duration-300 overflow-hidden">
@@ -32,21 +31,21 @@ export default function LandingPage() {
           className="absolute inset-0 z-0 pointer-events-none"
           style={{ y: heroBgY }}
         >
-          <div className="absolute inset-0 bg-parallax opacity-40 dark:opacity-20" style={{ backgroundImage: "radial-gradient(circle at center, rgba(14, 165, 233, 0.15) 0%, transparent 70%)" }} />
-          <div className="absolute top-20 left-20 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] opacity-70 animate-blob"></div>
-          <div className="absolute top-20 right-20 w-72 h-72 bg-sky-300 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] opacity-70 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-indigo-400 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[100px] opacity-70 animate-blob animation-delay-4000"></div>
+          <div className="absolute inset-0 bg-parallax opacity-50 dark:opacity-30" style={{ backgroundImage: "radial-gradient(circle at center, rgba(14, 165, 233, 0.1) 0%, transparent 70%)" }} />
+          <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] opacity-60 animate-blob"></div>
+          <div className="absolute top-20 right-20 w-72 h-72 bg-sky-400 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] opacity-60 animate-blob animation-delay-2000"></div>
+          <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] opacity-60 animate-blob animation-delay-4000"></div>
         </motion.div>
 
         {/* Hero İçerik */}
         <motion.div 
           className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 w-full"
-          style={{ y: heroContentY, opacity: heroOpacity }}
+          style={{ y: heroContentY }}
         >
           <motion.div 
-            initial={{ opacity: 0, y: -20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-blue-100 dark:border-blue-800/50 shadow-sm text-blue-700 dark:text-blue-300 text-sm font-medium mb-8 hover:shadow-md transition-shadow"
           >
             <span className="flex h-2.5 w-2.5 relative">
@@ -57,9 +56,9 @@ export default function LandingPage() {
           </motion.div>
           
           <motion.h1 
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1, ease: "easeOut" }}
+            transition={{ duration: 0.4, delay: 0.05, ease: "easeOut" }}
             className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-8 drop-shadow-sm"
           >
             Elektrikli Aracınız İçin <br className="hidden md:block" />
@@ -69,9 +68,9 @@ export default function LandingPage() {
           </motion.h1>
           
           <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
             className="mt-4 text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed"
           >
             Menzil endişesine son! Aracınızın modeline ve mevcut şarjınıza göre, 
@@ -79,9 +78,9 @@ export default function LandingPage() {
           </motion.p>
           
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            transition={{ duration: 0.4, delay: 0.15, ease: "easeOut" }}
             className="flex flex-col sm:flex-row justify-center gap-4"
           >
             <Link
@@ -101,14 +100,14 @@ export default function LandingPage() {
 
           {/* Dashboard Preview / Mockup */}
           <motion.div 
-            initial={{ opacity: 0, y: 100, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 1, delay: 0.4, type: "spring", stiffness: 50 }}
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 80 }}
             className="mt-20 relative mx-auto max-w-5xl group"
           >
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 to-sky-400 rounded-3xl blur-2xl opacity-20 group-hover:opacity-40 transition-opacity duration-700"></div>
-            <div className="relative rounded-2xl border border-slate-200/60 dark:border-slate-800/60 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm p-2 shadow-2xl shadow-slate-200/50 dark:shadow-slate-900/50 transition-colors">
-              <div className="rounded-xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 aspect-video relative flex items-center justify-center group-hover:scale-[1.01] transition-transform duration-500">
+            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-sky-400 to-blue-600 rounded-[2rem] blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
+            <div className="relative rounded-[1.5rem] border border-slate-200/80 dark:border-slate-700/80 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl p-2 shadow-2xl transition-colors">
+              <div className="rounded-xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 aspect-video relative flex items-center justify-center">
                 <img 
                   src="/hero.png" 
                   alt="Şarj Rota Arayüzü" 
@@ -125,12 +124,13 @@ export default function LandingPage() {
       </div>
 
       {/* ── NASIL ÇALIŞIR ── */}
-      <div id="nasil-calisir" className="py-32 bg-white dark:bg-slate-950 transition-colors relative z-20">
+      <div id="nasil-calisir" className="py-32 bg-slate-50/50 dark:bg-slate-950/50 transition-colors relative z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.4 }}
             className="text-center mb-20"
           >
             <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white">Nasıl Çalışır?</h2>
@@ -141,21 +141,21 @@ export default function LandingPage() {
             <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-blue-100 via-blue-400 to-blue-100 dark:from-slate-800 dark:via-blue-600 dark:to-slate-800"></div>
             
             <StepCard 
-              delay={0.1}
+              delay={0.05}
               number="1"
               icon={<Target className="w-8 h-8 text-blue-600 dark:text-blue-400" />}
               title="Aracını Seç"
               description="Veritabanımızdan aracınızın marka ve modelini seçin. Sistem batarya kapasitenizi ve tüketiminizi otomatik ayarlar."
             />
             <StepCard 
-              delay={0.3}
+              delay={0.15}
               number="2"
               icon={<Navigation className="w-8 h-8 text-blue-600 dark:text-blue-400" />}
               title="Konumu Belirle"
               description="Başlangıç ve varış noktalarınızı haritadan seçin. Tercih ettiğiniz şarj ağlarını filtreleyin."
             />
             <StepCard 
-              delay={0.5}
+              delay={0.25}
               number="3"
               icon={<Zap className="w-8 h-8 text-blue-600 dark:text-blue-400" />}
               title="Rotan Hazır"
@@ -169,12 +169,13 @@ export default function LandingPage() {
       <SectionWithParallaxBg />
 
       {/* ── DESTEKLENEN AĞLAR ── */}
-      <div className="py-32 bg-white dark:bg-slate-950 transition-colors relative z-20">
+      <div className="py-32 bg-slate-50/50 dark:bg-slate-950/50 transition-colors relative z-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
             className="text-2xl md:text-4xl font-bold text-slate-900 dark:text-white mb-16"
           >
             Türkiye'nin En Büyük Şarj Ağları Tek Haritada
@@ -186,19 +187,19 @@ export default function LandingPage() {
             viewport={{ once: true }}
             variants={{
               hidden: {},
-              visible: { transition: { staggerChildren: 0.1 } }
+              visible: { transition: { staggerChildren: 0.05 } }
             }}
-            className="flex flex-wrap justify-center gap-6 md:gap-8 opacity-70 dark:opacity-80 grayscale hover:grayscale-0 transition-all duration-500"
+            className="flex flex-wrap justify-center gap-6 md:gap-8 opacity-70 dark:opacity-80 grayscale hover:grayscale-0 transition-all duration-300"
           >
             {['ZES', 'Trugo', 'Eşarj', 'Astor Şarj', 'Tesla Supercharger'].map((brand) => (
               <motion.div 
                 key={brand}
                 variants={{
-                  hidden: { opacity: 0, scale: 0.8 },
-                  visible: { opacity: 1, scale: 1 }
+                  hidden: { opacity: 0, scale: 0.9 },
+                  visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } }
                 }}
-                whileHover={{ scale: 1.1, rotate: [-1, 1, 0] }}
-                className="px-8 py-4 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm font-bold text-xl text-slate-800 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors cursor-default"
+                whileHover={{ scale: 1.05, rotate: [-1, 1, 0] }}
+                className="px-8 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm font-bold text-xl text-slate-800 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:shadow-md transition-all cursor-default"
               >
                 {brand}
               </motion.div>
@@ -208,12 +209,13 @@ export default function LandingPage() {
       </div>
 
       {/* ── SSS / FAQ ── */}
-      <div className="py-32 bg-slate-50 dark:bg-slate-900/50 transition-colors relative z-20">
+      <div className="py-32 bg-white dark:bg-slate-900/30 transition-colors relative z-20">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            transition={{ duration: 0.4 }}
             className="text-center mb-16"
           >
             <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white">Sıkça Sorulan Sorular</h2>
@@ -224,7 +226,7 @@ export default function LandingPage() {
             viewport={{ once: true }}
             variants={{
               hidden: {},
-              visible: { transition: { staggerChildren: 0.15 } }
+              visible: { transition: { staggerChildren: 0.1 } }
             }}
             className="space-y-6"
           >
@@ -281,36 +283,38 @@ function SectionWithParallaxBg() {
     offset: ["start end", "end start"]
   });
   
-  // Resim yukarı doğru daha yavaş kayacak
-  const yBg = useTransform(scrollYProgress, [0, 1], ["-20%", "20%"]);
+  // Parallax Arkaplan (Hafifletilmiş)
+  const yBg = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
   return (
     <div ref={ref} className="relative py-32 overflow-hidden bg-slate-900 z-10">
       <motion.div 
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0 opacity-80"
         style={{ 
-          backgroundImage: "linear-gradient(rgba(15, 23, 42, 0.8), rgba(15, 23, 42, 0.95)), url('https://images.unsplash.com/photo-1620800615965-0a99268393e8?q=80&w=2070&auto=format&fit=crop')",
+          backgroundImage: "url('https://images.unsplash.com/photo-1620800615965-0a99268393e8?q=80&w=2070&auto=format&fit=crop')",
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           y: yBg 
         }}
       />
+      <div className="absolute inset-0 z-0 bg-gradient-to-t from-slate-900 via-slate-900/90 to-slate-900/80"></div>
+      
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.8 }}
+            viewport={{ once: true, margin: "0px" }}
+            transition={{ duration: 0.5 }}
           >
             <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-8 drop-shadow-md">Menzil Endişesini Geride Bırakın</h2>
             <p className="text-xl text-slate-300 mb-10 leading-relaxed font-light">
               ŞarjRota sadece mesafeye bakmaz. Yükseklik farkları (topografya), otoyol hız limitleri ve hava durumu gibi etkenleri analiz ederek aracınızın gerçekte ne kadar şarj tüketeceğini hesaplar.
             </p>
             <ul className="space-y-6">
-              <BenefitItem delay={0.2} text="Zaman kaybı yaratan gereksiz şarj duraklarını atlar." />
-              <BenefitItem delay={0.4} text="Ağlara göre filtreleme ile sadece güvendiğiniz istasyonları bulur." />
-              <BenefitItem delay={0.6} text="Varış noktanızda pilinizin güvenli seviyede kalmasını garantiler." />
+              <BenefitItem delay={0.1} text="Zaman kaybı yaratan gereksiz şarj duraklarını atlar." />
+              <BenefitItem delay={0.2} text="Ağlara göre filtreleme ile sadece güvendiğiniz istasyonları bulur." />
+              <BenefitItem delay={0.3} text="Varış noktanızda pilinizin güvenli seviyede kalmasını garantiler." />
             </ul>
             <Link
               to="/harita"
@@ -321,24 +325,24 @@ function SectionWithParallaxBg() {
           </motion.div>
           <div className="grid grid-cols-2 gap-6">
             <motion.div 
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              whileHover={{ y: -10, scale: 1.05 }}
-              className="bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 p-8 rounded-3xl shadow-2xl"
+              transition={{ duration: 0.4, delay: 0.1 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="bg-slate-800/60 backdrop-blur-md border border-slate-700/50 p-8 rounded-3xl shadow-xl"
             >
               <BatteryCharging className="w-12 h-12 text-emerald-400 mb-6 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]" />
               <h3 className="text-white font-bold text-3xl mb-3">%95<span className="text-xl text-slate-400 font-normal block mt-1">Doğruluk</span></h3>
               <p className="text-slate-400 text-sm leading-relaxed">Gerçek tüketim verileriyle hesaplanmış hassas batarya tahmini.</p>
             </motion.div>
             <motion.div 
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.4 }}
-              whileHover={{ y: -10, scale: 1.05 }}
-              className="bg-slate-800/40 backdrop-blur-xl border border-slate-700/50 p-8 rounded-3xl mt-12 shadow-2xl"
+              transition={{ duration: 0.4, delay: 0.2 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="bg-slate-800/60 backdrop-blur-md border border-slate-700/50 p-8 rounded-3xl mt-12 shadow-xl"
             >
               <MapPin className="w-12 h-12 text-blue-400 mb-6 drop-shadow-[0_0_15px_rgba(96,165,250,0.5)]" />
               <h3 className="text-white font-bold text-3xl mb-3">3500+<span className="text-xl text-slate-400 font-normal block mt-1">İstasyon</span></h3>
@@ -354,12 +358,12 @@ function SectionWithParallaxBg() {
 function StepCard({ number, icon, title, description, delay }: { number: string, icon: React.ReactNode, title: string, description: string, delay: number }) {
   return (
     <motion.div 
-      initial={{ opacity: 0, y: 50 }}
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay }}
-      whileHover={{ y: -10, boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.15)" }}
-      className="relative flex flex-col items-center text-center p-8 bg-white dark:bg-slate-900 rounded-3xl shadow-lg border border-slate-100 dark:border-slate-800 z-10 transition-colors"
+      viewport={{ once: true, margin: "0px" }}
+      transition={{ duration: 0.4, delay }}
+      whileHover={{ y: -5, boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.1)" }}
+      className="relative flex flex-col items-center text-center p-8 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 z-10 transition-colors"
     >
       <div className="absolute -top-6 w-12 h-12 bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-blue-900 text-blue-600 dark:text-blue-400 font-bold text-xl rounded-full flex items-center justify-center shadow-md">
         {number}
@@ -376,10 +380,10 @@ function StepCard({ number, icon, title, description, delay }: { number: string,
 function BenefitItem({ text, delay }: { text: string, delay: number }) {
   return (
     <motion.li 
-      initial={{ opacity: 0, x: -20 }}
+      initial={{ opacity: 0, x: -15 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
+      transition={{ duration: 0.3, delay }}
       className="flex items-start gap-4"
     >
       <div className="bg-emerald-500/20 p-1 rounded-full shrink-0">
@@ -394,11 +398,11 @@ function FaqItem({ q, a }: { q: string, a: string }) {
   return (
     <motion.div 
       variants={{
-        hidden: { opacity: 0, y: 20 },
-        visible: { opacity: 1, y: 0 }
+        hidden: { opacity: 0, y: 15 },
+        visible: { opacity: 1, y: 0, transition: { duration: 0.3 } }
       }}
-      whileHover={{ scale: 1.02 }}
-      className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow cursor-default"
+      whileHover={{ scale: 1.01 }}
+      className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/60 dark:border-slate-700/60 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow cursor-default"
     >
       <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3">
         <div className="bg-blue-100 dark:bg-blue-900/40 p-2 rounded-lg">
