@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 export interface Location {
   lat: number;
@@ -73,6 +74,10 @@ interface AppState {
   // Mobil sidebar
   isMobileSidebarOpen: boolean;
 
+  // Tema
+  theme: 'light' | 'dark';
+  toggleTheme: () => void;
+
   setStartLocation: (loc: Location | null) => void;
   setEndLocation: (loc: Location | null) => void;
   setSelectedVehicle: (vehicle: Vehicle | null) => void;
@@ -84,54 +89,74 @@ interface AppState {
   closeMobileSidebar: () => void;
 }
 
-export const useAppStore = create<AppState>((set, get) => ({
-  startLocation: null,
-  endLocation: null,
-  selectedVehicle: null,
-  selectedStationBrands: [],
-  route: [],
-  stops: [],
-  nearbyStations: [],
-  routeSummary: null,
-  alternatives: [],
-  selectedAlternativeIndex: 0,
-  selectingMode: 'start' as 'start' | 'end' | null,
-  isMobileSidebarOpen: false,
+export const useAppStore = create<AppState>()(
+  persist(
+    (set, get) => ({
+      startLocation: null,
+      endLocation: null,
+      selectedVehicle: null,
+      selectedStationBrands: [],
+      route: [],
+      stops: [],
+      nearbyStations: [],
+      routeSummary: null,
+      alternatives: [],
+      selectedAlternativeIndex: 0,
+      selectingMode: 'start' as 'start' | 'end' | null,
+      isMobileSidebarOpen: false,
+      theme: 'light',
 
-  setStartLocation: (loc) => set({ startLocation: loc }),
-  setEndLocation: (loc) => set({ endLocation: loc }),
-  setSelectedVehicle: (vehicle) => set({ selectedVehicle: vehicle }),
-  setSelectingMode: (mode) => set({ selectingMode: mode }),
-
-  toggleStationBrand: (brand) => set((state) => ({
-    selectedStationBrands: state.selectedStationBrands.includes(brand)
-      ? state.selectedStationBrands.filter((b) => b !== brand)
-      : [...state.selectedStationBrands, brand],
-  })),
-
-  setRouteData: (route, stops, summary, alternatives = [], nearbyStations = []) =>
-    set({ route, stops, routeSummary: summary, alternatives, selectedAlternativeIndex: 0, nearbyStations }),
-
-  selectAlternative: (index) => {
-    const { alternatives } = get();
-    const alt = alternatives.find(a => a.index === index);
-    if (!alt) return;
-    set({
-      selectedAlternativeIndex: index,
-      route: [...alt.path],
-      stops: [...alt.stops],
-      nearbyStations: [...(alt.nearbyStations ?? [])],
-      routeSummary: {
-        totalDistanceKm:        alt.totalDistanceKm,
-        estimatedDurationHours: alt.estimatedDurationHours,
-        chargeTimeHours:        alt.chargeTimeHours ?? 0,
-        totalJourneyHours:      alt.totalJourneyHours ?? alt.estimatedDurationHours,
-        chargeStopsCount:       alt.chargeStopsCount,
-        arrivalChargePercentage: alt.arrivalChargePercentage,
+      toggleTheme: () => {
+        const newTheme = get().theme === 'light' ? 'dark' : 'light';
+        set({ theme: newTheme });
+        if (newTheme === 'dark') {
+          document.documentElement.classList.add('dark');
+        } else {
+          document.documentElement.classList.remove('dark');
+        }
       },
-    });
-  },
 
-  toggleMobileSidebar: () => set((s) => ({ isMobileSidebarOpen: !s.isMobileSidebarOpen })),
-  closeMobileSidebar: () => set({ isMobileSidebarOpen: false }),
-}));
+      setStartLocation: (loc) => set({ startLocation: loc }),
+      setEndLocation: (loc) => set({ endLocation: loc }),
+      setSelectedVehicle: (vehicle) => set({ selectedVehicle: vehicle }),
+      setSelectingMode: (mode) => set({ selectingMode: mode }),
+
+      toggleStationBrand: (brand) => set((state) => ({
+        selectedStationBrands: state.selectedStationBrands.includes(brand)
+          ? state.selectedStationBrands.filter((b) => b !== brand)
+          : [...state.selectedStationBrands, brand],
+      })),
+
+      setRouteData: (route, stops, summary, alternatives = [], nearbyStations = []) =>
+        set({ route, stops, routeSummary: summary, alternatives, selectedAlternativeIndex: 0, nearbyStations }),
+
+      selectAlternative: (index) => {
+        const { alternatives } = get();
+        const alt = alternatives.find(a => a.index === index);
+        if (!alt) return;
+        set({
+          selectedAlternativeIndex: index,
+          route: [...alt.path],
+          stops: [...alt.stops],
+          nearbyStations: [...(alt.nearbyStations ?? [])],
+          routeSummary: {
+            totalDistanceKm:        alt.totalDistanceKm,
+            estimatedDurationHours: alt.estimatedDurationHours,
+            chargeTimeHours:        alt.chargeTimeHours ?? 0,
+            totalJourneyHours:      alt.totalJourneyHours ?? alt.estimatedDurationHours,
+            chargeStopsCount:       alt.chargeStopsCount,
+            arrivalChargePercentage: alt.arrivalChargePercentage,
+          },
+        });
+      },
+
+      toggleMobileSidebar: () => set((s) => ({ isMobileSidebarOpen: !s.isMobileSidebarOpen })),
+      closeMobileSidebar: () => set({ isMobileSidebarOpen: false }),
+    }),
+    {
+      name: 'sarjrota-storage',
+      // Sadece temayı sakla
+      partialize: (state) => ({ theme: state.theme }),
+    }
+  )
+);

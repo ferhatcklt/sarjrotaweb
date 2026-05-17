@@ -1,8 +1,9 @@
-import { Suspense, lazy } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import { useAppStore } from './store/useAppStore';
 
 // Harita sayfasını sadece ziyaret edildiğinde yükle (Lazy Loading)
 // Bu sayede Leaflet ve react-leaflet anasayfa bundle'ına dahil olmaz.
@@ -10,13 +11,23 @@ const MapPage = lazy(() => import('./pages/MapPage'));
 
 // Harita yüklenirken gösterilecek şık bir loader
 const MapPageLoader = () => (
-  <div className="h-screen w-screen flex flex-col items-center justify-center bg-gray-50">
-    <div className="w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full animate-spin mb-4"></div>
-    <p className="text-slate-600 font-medium font-sans animate-pulse">Harita yükleniyor, lütfen bekleyin...</p>
+  <div className="h-screen w-screen flex flex-col items-center justify-center bg-gray-50 dark:bg-slate-900 transition-colors">
+    <div className="w-12 h-12 border-4 border-blue-200 dark:border-blue-900 border-t-blue-600 dark:border-t-blue-500 rounded-full animate-spin mb-4"></div>
+    <p className="text-slate-600 dark:text-slate-400 font-medium font-sans animate-pulse">Harita yükleniyor, lütfen bekleyin...</p>
   </div>
 );
 
 function App() {
+  const { theme } = useAppStore();
+
+  useEffect(() => {
+    if (theme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  }, [theme]);
+
   return (
     <BrowserRouter>
       <Routes>

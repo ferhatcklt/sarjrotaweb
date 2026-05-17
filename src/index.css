@@ -18,5 +18,47 @@
     height: 100%;
     margin: 0;
     font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+    /* Gece modunda temel renkler */
+    @apply bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300;
+  }
+}
+
+/* Tailwind v4 Class-based Dark Mode */
+@custom-variant dark (&:is(.dark *));
+
+/* Leaflet Harita Dark Mode Filtresi */
+.dark .leaflet-layer,
+.dark .leaflet-control-zoom-in,
+.dark .leaflet-control-zoom-out,
+.dark .leaflet-control-attribution {
+  filter: invert(100%) hue-rotate(180deg) brightness(95%) contrast(90%);
+}
+
+/* Marker ikonlarının renklerinin bozulmaması için geri çeviriyoruz */
+.dark .leaflet-marker-icon,
+.dark .leaflet-marker-shadow {
+  filter: invert(100%) hue-rotate(180deg);
+}
+
+/* Parallax Utilities */
+@layer utilities {
+  .bg-parallax {
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+  
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-slate-200 dark:bg-slate-700 rounded-full;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-slate-300 dark:bg-slate-600;
   }
 }
