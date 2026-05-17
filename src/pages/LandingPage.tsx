@@ -215,7 +215,7 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-emerald-400 font-bold text-2xl">₺420</div>
+                  <div className="text-emerald-400 font-bold text-2xl">₺380</div>
                   <div className="text-slate-500 text-xs">Tahmini Maliyet</div>
                 </div>
               </div>
@@ -229,7 +229,7 @@ export default function LandingPage() {
                   </div>
                   <div className="flex items-center gap-4 relative z-10 pl-2">
                     <div className="w-4 h-4 rounded-full bg-blue-500 ring-4 ring-slate-950"></div>
-                    <div className="text-white font-medium">Oksijen 183 - ZES <span className="text-blue-400 text-sm font-normal block">45 Dk Şarj (%15 ➔ %80)</span></div>
+                    <div className="text-white font-medium">Oksijen 183 - Trugo <span className="text-blue-400 text-sm font-normal block">25 Dk Şarj (%42 ➔ %80)</span></div>
                   </div>
                   <div className="flex items-center gap-4 relative z-10">
                     <div className="w-8 h-8 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs">İZM</div>
@@ -240,7 +240,7 @@ export default function LandingPage() {
 
               <div className="flex items-center justify-between pt-6 border-t border-slate-800/50 text-sm">
                 <span className="text-slate-400">Toplam Mesafe: <strong className="text-white">480 km</strong></span>
-                <span className="text-slate-400">Süre: <strong className="text-white">5 Saat 15 Dk</strong></span>
+                <span className="text-slate-400">Süre: <strong className="text-white">4 Saat 45 Dk</strong></span>
               </div>
             </motion.div>
 
@@ -260,7 +260,7 @@ export default function LandingPage() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-emerald-400 font-bold text-2xl">₺350</div>
+                  <div className="text-emerald-400 font-bold text-2xl">₺280</div>
                   <div className="text-slate-500 text-xs">Tahmini Maliyet</div>
                 </div>
               </div>
@@ -274,18 +274,18 @@ export default function LandingPage() {
                   </div>
                   <div className="flex items-center gap-4 relative z-10 pl-2">
                     <div className="w-4 h-4 rounded-full bg-red-500 ring-4 ring-slate-950"></div>
-                    <div className="text-white font-medium">Afyon Supercharger <span className="text-red-400 text-sm font-normal block">25 Dk Şarj (%20 ➔ %75)</span></div>
+                    <div className="text-white font-medium">Afyon Supercharger <span className="text-red-400 text-sm font-normal block">15 Dk Şarj (%45 ➔ %80)</span></div>
                   </div>
                   <div className="flex items-center gap-4 relative z-10">
                     <div className="w-8 h-8 rounded-full bg-slate-800 border-2 border-slate-600 flex items-center justify-center text-xs">ANT</div>
-                    <div className="text-white font-medium">Antalya <span className="text-slate-500 text-sm font-normal block">Varış Şarjı: %18</span></div>
+                    <div className="text-white font-medium">Antalya <span className="text-slate-500 text-sm font-normal block">Varış Şarjı: %30</span></div>
                   </div>
                 </div>
               </div>
 
               <div className="flex items-center justify-between pt-6 border-t border-slate-800/50 text-sm">
                 <span className="text-slate-400">Toplam Mesafe: <strong className="text-white">475 km</strong></span>
-                <span className="text-slate-400">Süre: <strong className="text-white">5 Saat 45 Dk</strong></span>
+                <span className="text-slate-400">Süre: <strong className="text-white">5 Saat 10 Dk</strong></span>
               </div>
             </motion.div>
           </div>
