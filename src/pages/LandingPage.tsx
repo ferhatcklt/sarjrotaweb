@@ -22,7 +22,11 @@ export default function LandingPage() {
       
       {/* ── ARKA PLAN: Dinamik & Fütüristik Mesh ── */}
       <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
+        {/* CSS Grid Pattern */}
+        <div className="absolute inset-0" style={{ 
+          backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)', 
+          backgroundSize: '40px 40px' 
+        }}></div>
         
         {/* Hareketli Gradient Orb'lar */}
         <motion.div 
@@ -102,8 +106,16 @@ export default function LandingPage() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="md:col-span-5 md:row-span-2 relative rounded-[2rem] bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 overflow-hidden flex items-center justify-center group"
           >
-            {/* Soyut Harita Arkaplanı */}
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074&auto=format&fit=crop')] bg-cover bg-center opacity-30 mix-blend-luminosity filter contrast-125 transition-transform duration-1000 group-hover:scale-105"></div>
+            {/* CSS Soyut Harita Arkaplanı */}
+            <div className="absolute inset-0 overflow-hidden">
+              <div className="absolute -inset-4 opacity-20" style={{
+                backgroundImage: 'radial-gradient(circle at 2px 2px, rgba(255,255,255,0.2) 1px, transparent 0)',
+                backgroundSize: '24px 24px'
+              }}></div>
+              <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
+              <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-blue-500/10 rounded-full blur-2xl"></div>
+            </div>
+            
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/80"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-transparent to-transparent"></div>
             

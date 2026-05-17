@@ -467,18 +467,7 @@ export const Sidebar = () => {
                 </div>
               )}
 
-              {/* Tahmini Şarj Maliyeti */}
-              {routeSummary.estimatedCost !== undefined && routeSummary.estimatedCost > 0 && (
-                <div className="col-span-2 flex flex-col border-t border-brand-200/50 dark:border-brand-800/50 pt-2 mt-1">
-                  <span className="text-xs text-brand-600/80 dark:text-brand-400/80 uppercase">Tahmini Şarj Maliyeti</span>
-                  <span className="font-bold text-emerald-600 dark:text-emerald-400 text-lg">
-                    ₺{routeSummary.estimatedCost.toLocaleString('tr-TR', { maximumFractionDigits: 2 })}
-                  </span>
-                  <span className="text-[10px] text-gray-400 dark:text-slate-500 mt-0.5">
-                    *Maliyet tahmini ortalama KW fiyatları üzerinden hesaplanmıştır.
-                  </span>
-                </div>
-              )}
+
             </div>
           </div>
         )}
