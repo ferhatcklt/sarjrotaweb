@@ -1,0 +1,39 @@
+import { Sidebar } from './components/Sidebar';
+import { MapView } from './components/MapView';
+import { useAppStore } from './store/useAppStore';
+
+function App() {
+  const { isMobileSidebarOpen, closeMobileSidebar } = useAppStore();
+
+  return (
+    <div className="flex h-screen w-screen overflow-hidden bg-gray-100 font-sans relative">
+      {/* ── Desktop: Sidebar sabit sol panel ── */}
+      <div className="hidden md:flex w-80 h-full shrink-0 z-10">
+        <Sidebar />
+      </div>
+
+      {/* ── Mobil: Overlay sidebar ── */}
+      {isMobileSidebarOpen && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          onClick={closeMobileSidebar}
+        />
+      )}
+      <div
+        className={`
+          fixed top-0 left-0 h-full w-[85vw] max-w-sm z-50
+          transform transition-transform duration-300 ease-in-out
+          md:hidden
+          ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        `}
+      >
+        <Sidebar />
+      </div>
+
+      {/* ── Harita: tüm ekranı kaplar ── */}
+      <MapView />
+    </div>
+  );
+}
+
+export default App;
