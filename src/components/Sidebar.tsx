@@ -118,6 +118,7 @@ export const Sidebar = () => {
         totalJourneyHours:      alt.totalJourneyHours ?? alt.estimatedDurationHours,
         chargeStopsCount:       alt.chargeStopsCount,
         arrivalChargePercentage: alt.arrivalChargePercentage,
+        estimatedCost:          alt.estimatedCost,
       }));
 
       setRouteData(
@@ -129,6 +130,7 @@ export const Sidebar = () => {
           totalJourneyHours:      data.totalJourneyHours ?? data.estimatedDurationHours,
           chargeStopsCount:       data.chargeStopsCount,
           arrivalChargePercentage: data.arrivalChargePercentage,
+          estimatedCost:          data.estimatedCost,
         },
         mappedAlternatives,
         data.nearbyStations ?? [],
@@ -451,6 +453,17 @@ export const Sidebar = () => {
                       %{routeSummary.arrivalChargePercentage}
                     </span>
                   </div>
+                </div>
+              )}
+
+              {/* Tahmini Maliyet */}
+              {routeSummary.estimatedCost !== undefined && routeSummary.estimatedCost > 0 && (
+                <div className="col-span-2 flex flex-col border-t border-brand-200/50 dark:border-brand-800/50 pt-2 mt-1">
+                  <span className="text-xs text-brand-600/80 dark:text-brand-400/80 uppercase">Tahmini Şarj Maliyeti</span>
+                  <span className="font-bold text-emerald-700 dark:text-emerald-400 text-base flex items-center gap-1">
+                    ₺{routeSummary.estimatedCost.toLocaleString('tr-TR')}
+                    <span className="text-[10px] font-normal text-gray-500 dark:text-slate-400 mt-1">(Güncel tarife ortalaması)</span>
+                  </span>
                 </div>
               )}
 

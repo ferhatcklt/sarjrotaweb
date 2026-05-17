@@ -1,416 +1,245 @@
 import { Link } from 'react-router-dom';
-import { 
-  Zap, 
-  MapPin, 
-  BatteryCharging, 
-  ChevronRight, 
-  Target, 
-  Navigation, 
-  CheckCircle2, 
-  HelpCircle 
-} from 'lucide-react';
-import { Footer } from '../components/Footer';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useRef } from 'react';
+import { Zap, MapPin, BatteryCharging, ChevronRight, Activity, Cpu } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
 export default function LandingPage() {
-  const { scrollY } = useScroll();
-  
-  // Parallax Transformasyonları (Hafifletilmiş)
-  const heroBgY = useTransform(scrollY, [0, 1000], ['0%', '15%']);
-  const heroContentY = useTransform(scrollY, [0, 1000], ['0%', '5%']);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMousePosition({
+        x: (e.clientX / window.innerWidth - 0.5) * 20,
+        y: (e.clientY / window.innerHeight - 0.5) * 20,
+      });
+    };
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 font-['Inter'] selection:bg-blue-200 dark:selection:bg-blue-900 transition-colors duration-300 overflow-hidden">
+    <div className="relative w-full h-auto md:h-[calc(100vh-64px)] bg-[#030712] overflow-hidden selection:bg-brand-500/30">
       
-      {/* ── HERO SECTION (Gerçek Parallax) ── */}
-      <div className="relative pt-20 pb-20 lg:pt-32 lg:pb-32 flex items-center justify-center min-h-[90vh]">
+      {/* ── ARKA PLAN: Dinamik & Fütüristik Mesh ── */}
+      <div className="absolute inset-0 z-0 pointer-events-none opacity-60">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]"></div>
         
-        {/* Parallax Arkaplan Katmanı */}
+        {/* Hareketli Gradient Orb'lar */}
         <motion.div 
-          className="absolute inset-0 z-0 pointer-events-none"
-          style={{ y: heroBgY }}
-        >
-          <div className="absolute inset-0 bg-parallax opacity-50 dark:opacity-30" style={{ backgroundImage: "radial-gradient(circle at center, rgba(14, 165, 233, 0.1) 0%, transparent 70%)" }} />
-          <div className="absolute top-20 left-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] opacity-60 animate-blob"></div>
-          <div className="absolute top-20 right-20 w-72 h-72 bg-sky-400 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] opacity-60 animate-blob animation-delay-2000"></div>
-          <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-indigo-500 rounded-full mix-blend-multiply dark:mix-blend-screen filter blur-[120px] opacity-60 animate-blob animation-delay-4000"></div>
-        </motion.div>
-
-        {/* Hero İçerik */}
+          animate={{ 
+            x: [0, 50, -50, 0], 
+            y: [0, -50, 50, 0],
+            scale: [1, 1.2, 0.8, 1]
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute -top-1/4 -left-1/4 w-[60vw] h-[60vw] rounded-full bg-blue-600/20 blur-[120px]"
+        />
         <motion.div 
-          className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10 w-full"
-          style={{ y: heroContentY }}
-        >
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border border-blue-100 dark:border-blue-800/50 shadow-sm text-blue-700 dark:text-blue-300 text-sm font-medium mb-8 hover:shadow-md transition-shadow"
-          >
-            <span className="flex h-2.5 w-2.5 relative">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span>
-            </span>
-            Türkiye'nin En Kapsamlı Şarj Ağı Haritası
-          </motion.div>
-          
-          <motion.h1 
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.05, ease: "easeOut" }}
-            className="text-5xl md:text-6xl lg:text-7xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-8 drop-shadow-sm"
-          >
-            Elektrikli Aracınız İçin <br className="hidden md:block" />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-sky-500 dark:from-blue-400 dark:to-sky-300 inline-block hover:scale-[1.02] transition-transform duration-300">
-              Akıllı Rota Planlayıcı
-            </span>
-          </motion.h1>
-          
-          <motion.p 
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.1, ease: "easeOut" }}
-            className="mt-4 text-xl text-slate-600 dark:text-slate-300 max-w-2xl mx-auto mb-10 leading-relaxed"
-          >
-            Menzil endişesine son! Aracınızın modeline ve mevcut şarjınıza göre, 
-            yolculuğunuzdaki en hızlı ve uygun şarj istasyonlarını saniyeler içinde hesaplayın.
-          </motion.p>
-          
-          <motion.div 
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: 0.15, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row justify-center gap-4"
-          >
-            <Link
-              to="/harita"
-              className="group inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-white bg-blue-600 rounded-full hover:bg-blue-700 hover:shadow-[0_0_40px_-10px_rgba(37,99,235,0.7)] transition-all duration-300 transform hover:-translate-y-1"
-            >
-              Hemen Rota Oluştur
-              <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Link>
-            <a
-              href="#nasil-calisir"
-              className="inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-medium text-slate-700 dark:text-slate-200 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full hover:bg-slate-50 dark:hover:bg-slate-700 hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1"
-            >
-              Nasıl Çalışır?
-            </a>
-          </motion.div>
+          animate={{ 
+            x: [0, -70, 70, 0], 
+            y: [0, 70, -70, 0],
+            scale: [1, 0.9, 1.3, 1]
+          }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute -bottom-1/4 -right-1/4 w-[50vw] h-[50vw] rounded-full bg-sky-500/10 blur-[120px]"
+        />
+      </div>
 
-          {/* Dashboard Preview / Mockup */}
+      {/* ── BENTO GRID KAPSAYICISI ── */}
+      <div className="relative z-10 w-full h-full max-w-[1600px] mx-auto p-4 sm:p-6 lg:p-8 flex flex-col justify-center">
+        
+        <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-3 gap-4 lg:gap-6 h-full min-h-[800px] md:min-h-0">
+          
+          {/* 1. ANA HERO KUTUSU (Sol Üst - 7 Sütun, 2 Satır) */}
           <motion.div 
-            initial={{ opacity: 0, y: 40 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2, type: "spring", stiffness: 80 }}
-            className="mt-20 relative mx-auto max-w-5xl group"
+            transition={{ duration: 0.5, delay: 0.1 }}
+            style={{ 
+              transform: `perspective(1000px) rotateY(${mousePosition.x * 0.1}deg) rotateX(${-mousePosition.y * 0.1}deg)` 
+            }}
+            className="md:col-span-7 md:row-span-2 relative group rounded-[2rem] bg-gradient-to-br from-slate-900/90 to-slate-950/90 backdrop-blur-xl border border-slate-800/60 p-8 lg:p-12 overflow-hidden flex flex-col justify-center hover:border-slate-700/80 transition-colors"
           >
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-600 via-sky-400 to-blue-600 rounded-[2rem] blur-2xl opacity-30 group-hover:opacity-50 transition-opacity duration-500"></div>
-            <div className="relative rounded-[1.5rem] border border-slate-200/80 dark:border-slate-700/80 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl p-2 shadow-2xl transition-colors">
-              <div className="rounded-xl overflow-hidden border border-slate-100 dark:border-slate-800 bg-slate-100 dark:bg-slate-800 aspect-video relative flex items-center justify-center">
-                <img 
-                  src="/hero.png" 
-                  alt="Şarj Rota Arayüzü" 
-                  className="w-full h-full object-cover rounded-lg dark:brightness-90 dark:contrast-125"
-                  onError={(e) => {
-                    (e.target as HTMLImageElement).style.display = 'none';
-                    e.currentTarget.parentElement!.innerHTML = '<div class="text-slate-400 dark:text-slate-500 font-medium text-lg flex flex-col items-center gap-4"><svg class="w-12 h-12 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 20l-5.447-2.724A1 1 0 013 16.382V5.618a1 1 0 011.447-.894L9 7m0 13l6-3m-6 3V7m6 10l4.553 2.276A1 1 0 0021 18.382V7.618a1 1 0 00-.553-.894L15 4m0 13V4m0 0L9 7"></path></svg>Gelişmiş Harita Arayüzü</div>';
-                  }}
-                />
+            {/* İç Işık / Glow */}
+            <div className="absolute -inset-px bg-gradient-to-r from-blue-500/20 to-sky-400/20 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-xl"></div>
+            
+            <div className="relative z-10">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold tracking-wide mb-8">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                </span>
+                Sistem Aktif v2.0
               </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold text-white tracking-tight leading-[1.1] mb-6">
+                Elektrikli araç rotanızı <br />
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
+                  yapay zeka yönetsin.
+                </span>
+              </h1>
+              
+              <p className="text-slate-400 text-lg lg:text-xl max-w-xl mb-10 leading-relaxed font-light">
+                ŞarjRota; topografya, hava durumu ve araç batarya profilinizi analiz ederek durmanız gereken ideal noktaları ve maliyeti saniyeler içinde hesaplar.
+              </p>
+
+              <Link
+                to="/harita"
+                className="group/btn relative inline-flex items-center justify-center gap-3 px-8 py-4 bg-white text-slate-950 rounded-full font-bold text-lg hover:scale-105 transition-all duration-300"
+              >
+                Kalkışa Hazırlan
+                <div className="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center group-hover/btn:bg-slate-200 transition-colors">
+                  <ChevronRight className="w-5 h-5 group-hover/btn:translate-x-0.5 transition-transform" />
+                </div>
+              </Link>
             </div>
           </motion.div>
-        </motion.div>
-      </div>
 
-      {/* ── NASIL ÇALIŞIR ── */}
-      <div id="nasil-calisir" className="py-32 bg-slate-50/50 dark:bg-slate-950/50 transition-colors relative z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* 2. GÖRSEL / HARİTA SİMÜLASYONU KUTUSU (Sağ Üst - 5 Sütun, 2 Satır) */}
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "0px" }}
-            transition={{ duration: 0.4 }}
-            className="text-center mb-20"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="md:col-span-5 md:row-span-2 relative rounded-[2rem] bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 overflow-hidden flex items-center justify-center group"
           >
-            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white">Nasıl Çalışır?</h2>
-            <p className="mt-6 text-xl text-slate-600 dark:text-slate-400">Yola çıkmadan önce sadece 3 adımda mükemmel rotanızı planlayın.</p>
-          </motion.div>
-
-          <div className="grid md:grid-cols-3 gap-12 relative">
-            <div className="hidden md:block absolute top-12 left-[16%] right-[16%] h-0.5 bg-gradient-to-r from-blue-100 via-blue-400 to-blue-100 dark:from-slate-800 dark:via-blue-600 dark:to-slate-800"></div>
+            {/* Soyut Harita Arkaplanı */}
+            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2074&auto=format&fit=crop')] bg-cover bg-center opacity-30 mix-blend-luminosity filter contrast-125 transition-transform duration-1000 group-hover:scale-105"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/80"></div>
+            <div className="absolute inset-0 bg-gradient-to-r from-slate-950 via-transparent to-transparent"></div>
             
-            <StepCard 
-              delay={0.05}
-              number="1"
-              icon={<Target className="w-8 h-8 text-blue-600 dark:text-blue-400" />}
-              title="Aracını Seç"
-              description="Veritabanımızdan aracınızın marka ve modelini seçin. Sistem batarya kapasitenizi ve tüketiminizi otomatik ayarlar."
-            />
-            <StepCard 
-              delay={0.15}
-              number="2"
-              icon={<Navigation className="w-8 h-8 text-blue-600 dark:text-blue-400" />}
-              title="Konumu Belirle"
-              description="Başlangıç ve varış noktalarınızı haritadan seçin. Tercih ettiğiniz şarj ağlarını filtreleyin."
-            />
-            <StepCard 
-              delay={0.25}
-              number="3"
-              icon={<Zap className="w-8 h-8 text-blue-600 dark:text-blue-400" />}
-              title="Rotan Hazır"
-              description="Gerçek yol koşulları ve menzilinize göre nerede ve kaç dakika şarj etmeniz gerektiği saniyeler içinde karşınıza gelsin."
-            />
-          </div>
-        </div>
-      </div>
+            {/* Animasyonlu Rota Çizgisi ve Noktalar */}
+            <svg className="absolute inset-0 w-full h-full z-10" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <motion.path 
+                d="M 10 80 Q 30 20 50 50 T 90 20" 
+                fill="none" 
+                stroke="url(#gradient)" 
+                strokeWidth="0.8"
+                strokeDasharray="4 2"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              />
+              <defs>
+                <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#3b82f6" />
+                  <stop offset="100%" stopColor="#10b981" />
+                </linearGradient>
+              </defs>
+            </svg>
 
-      {/* ── NEDEN ŞARJ ROTA (Framer Parallax) ── */}
-      <SectionWithParallaxBg />
-
-      {/* ── DESTEKLENEN AĞLAR ── */}
-      <div className="py-32 bg-slate-50/50 dark:bg-slate-950/50 transition-colors relative z-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <motion.h2 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-            className="text-2xl md:text-4xl font-bold text-slate-900 dark:text-white mb-16"
-          >
-            Türkiye'nin En Büyük Şarj Ağları Tek Haritada
-          </motion.h2>
-          
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: {},
-              visible: { transition: { staggerChildren: 0.05 } }
-            }}
-            className="flex flex-wrap justify-center gap-6 md:gap-8 opacity-70 dark:opacity-80 grayscale hover:grayscale-0 transition-all duration-300"
-          >
-            {['ZES', 'Trugo', 'Eşarj', 'Astor Şarj', 'Tesla Supercharger'].map((brand) => (
-              <motion.div 
-                key={brand}
-                variants={{
-                  hidden: { opacity: 0, scale: 0.9 },
-                  visible: { opacity: 1, scale: 1, transition: { duration: 0.3 } }
-                }}
-                whileHover={{ scale: 1.05, rotate: [-1, 1, 0] }}
-                className="px-8 py-4 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-sm font-bold text-xl text-slate-800 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:shadow-md transition-all cursor-default"
-              >
-                {brand}
-              </motion.div>
-            ))}
+            {/* Yüzen Rota Bilgi Kartı */}
+            <motion.div 
+              animate={{ y: [-5, 5, -5] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="relative z-20 bg-slate-950/80 backdrop-blur-xl border border-slate-700/50 p-6 rounded-2xl shadow-2xl w-3/4 max-w-sm"
+            >
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-slate-400 text-xs font-semibold uppercase tracking-wider">Canlı Rota</span>
+                <span className="flex h-2 w-2 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+              </div>
+              <div className="space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                    <MapPin size={16} />
+                  </div>
+                  <div>
+                    <div className="text-white text-sm font-bold">İstanbul</div>
+                    <div className="text-slate-500 text-xs">Başlangıç • %100 Şarj</div>
+                  </div>
+                </div>
+                <div className="ml-4 w-0.5 h-6 bg-slate-800"></div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-400">
+                    <Zap size={16} />
+                  </div>
+                  <div>
+                    <div className="text-white text-sm font-bold">Bolu Dağı Tesisi</div>
+                    <div className="text-slate-500 text-xs">+35 dk Şarj Molası</div>
+                  </div>
+                </div>
+                <div className="ml-4 w-0.5 h-6 bg-slate-800"></div>
+                <div className="flex items-center gap-3">
+                  <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400">
+                    <MapPin size={16} />
+                  </div>
+                  <div>
+                    <div className="text-white text-sm font-bold">Ankara</div>
+                    <div className="text-slate-500 text-xs">Varış • %24 Şarj</div>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
           </motion.div>
-        </div>
-      </div>
 
-      {/* ── SSS / FAQ ── */}
-      <div className="py-32 bg-white dark:bg-slate-900/30 transition-colors relative z-20">
-        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* 3. MALIYET KUTUSU (Alt Sol - 3 Sütun, 1 Satır) */}
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-            className="text-center mb-16"
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="md:col-span-3 md:row-span-1 rounded-[2rem] bg-gradient-to-br from-emerald-900/20 to-emerald-950/40 backdrop-blur-xl border border-emerald-800/30 p-6 flex flex-col justify-between relative group overflow-hidden"
           >
-            <h2 className="text-3xl md:text-5xl font-bold text-slate-900 dark:text-white">Sıkça Sorulan Sorular</h2>
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl group-hover:bg-emerald-500/20 transition-colors"></div>
+            <div className="flex items-center gap-2 text-emerald-400 font-medium text-sm z-10">
+              <Activity size={18} />
+              Yakıt Tasarrufu
+            </div>
+            <div className="z-10 mt-4">
+              <div className="text-slate-400 text-xs mb-1">Tahmini Ortalama Maliyet</div>
+              <div className="text-3xl lg:text-4xl font-bold text-white tracking-tight">₺0,95<span className="text-lg text-emerald-500 font-medium">/km</span></div>
+            </div>
           </motion.div>
+
+          {/* 4. DOĞRULUK KUTUSU (Alt Orta - 3 Sütun, 1 Satır) */}
           <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={{
-              hidden: {},
-              visible: { transition: { staggerChildren: 0.1 } }
-            }}
-            className="space-y-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+            className="md:col-span-3 md:row-span-1 rounded-[2rem] bg-slate-900/60 backdrop-blur-xl border border-slate-800/60 p-6 flex flex-col justify-between"
           >
-            <FaqItem 
-              q="ŞarjRota ücretsiz mi?" 
-              a="Evet, ŞarjRota'nın tüm rota hesaplama özellikleri ve istasyon görüntüleme modülleri tamamen ücretsizdir." 
-            />
-            <FaqItem 
-              q="Aracım listede yok, ne yapmalıyım?" 
-              a="Veritabanımızı sürekli güncelliyoruz. Listede olmayan bir araç için yakın batarya kapasiteli benzer bir model seçerek çok yaklaşık sonuçlar elde edebilirsiniz." 
-            />
-            <FaqItem 
-              q="İstasyonların doluluk durumunu görebilir miyim?" 
-              a="Şu an için anlık doluluk durumu (API kısıtlamaları nedeniyle) gösterilemiyor ancak istasyonların güç kapasiteleri (kW) ve soket tipleri (CCS, Type2) haritada yer almaktadır." 
-            />
+            <div className="flex items-center gap-2 text-sky-400 font-medium text-sm">
+              <Cpu size={18} />
+              Yapay Zeka Doğruluğu
+            </div>
+            <div className="mt-4">
+              <div className="text-5xl font-extrabold text-white tracking-tighter">%95<span className="text-2xl text-sky-500">+</span></div>
+              <div className="text-slate-400 text-sm mt-1">Gerçek dünya verileriyle test edildi.</div>
+            </div>
           </motion.div>
-        </div>
-      </div>
 
-      {/* ── FINAL CTA ── */}
-      <div className="relative py-32 overflow-hidden z-20">
-        <div className="absolute inset-0 bg-blue-600 dark:bg-blue-800"></div>
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.9 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          className="relative text-center px-4 max-w-4xl mx-auto"
-        >
-          <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-8 drop-shadow-md">Elektrikli Aracınızla Sınırları Aşın</h2>
-          <p className="text-blue-100 text-xl md:text-2xl mb-12 max-w-3xl mx-auto font-light">Sıfır emisyonlu yolculuklarınızı stressiz bir şekilde planlayın.</p>
-          <Link
-            to="/harita"
-            className="group inline-flex items-center justify-center px-10 py-5 text-xl font-bold text-blue-600 bg-white rounded-full hover:bg-slate-50 hover:scale-105 transition-all duration-300 shadow-2xl hover:shadow-[0_0_50px_rgba(255,255,255,0.4)]"
+          {/* 5. AĞLAR (MARQUEE) KUTUSU (Alt Sağ - 6 Sütun, 1 Satır) */}
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.5 }}
+            className="md:col-span-6 md:row-span-1 rounded-[2rem] bg-slate-900/40 backdrop-blur-xl border border-slate-800/40 p-6 flex flex-col justify-center overflow-hidden relative"
           >
-            Rota Oluşturmaya Başla
-            <Zap className="ml-3 w-6 h-6 text-yellow-500 group-hover:rotate-12 transition-transform" />
-          </Link>
-        </motion.div>
-      </div>
-
-      <Footer />
-    </div>
-  );
-}
-
-// ── Yardımcı Bileşenler ──
-
-// Neden ŞarjRota kısmı için scroll'a duyarlı özel arkaplan bileşeni
-function SectionWithParallaxBg() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-  
-  // Parallax Arkaplan (Hafifletilmiş)
-  const yBg = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
-
-  return (
-    <div ref={ref} className="relative py-32 overflow-hidden bg-slate-900 z-10">
-      <motion.div 
-        className="absolute inset-0 z-0 opacity-80"
-        style={{ 
-          backgroundImage: "url('https://images.unsplash.com/photo-1620800615965-0a99268393e8?q=80&w=2070&auto=format&fit=crop')",
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          y: yBg 
-        }}
-      />
-      <div className="absolute inset-0 z-0 bg-gradient-to-t from-slate-900 via-slate-900/90 to-slate-900/80"></div>
-      
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-16 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "0px" }}
-            transition={{ duration: 0.5 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-8 drop-shadow-md">Menzil Endişesini Geride Bırakın</h2>
-            <p className="text-xl text-slate-300 mb-10 leading-relaxed font-light">
-              ŞarjRota sadece mesafeye bakmaz. Yükseklik farkları (topografya), otoyol hız limitleri ve hava durumu gibi etkenleri analiz ederek aracınızın gerçekte ne kadar şarj tüketeceğini hesaplar.
-            </p>
-            <ul className="space-y-6">
-              <BenefitItem delay={0.1} text="Zaman kaybı yaratan gereksiz şarj duraklarını atlar." />
-              <BenefitItem delay={0.2} text="Ağlara göre filtreleme ile sadece güvendiğiniz istasyonları bulur." />
-              <BenefitItem delay={0.3} text="Varış noktanızda pilinizin güvenli seviyede kalmasını garantiler." />
-            </ul>
-            <Link
-              to="/harita"
-              className="inline-flex mt-12 items-center justify-center gap-2 px-10 py-5 text-lg font-bold text-slate-900 bg-white rounded-full hover:bg-slate-100 hover:scale-105 transition-all shadow-[0_0_30px_rgba(255,255,255,0.1)]"
-            >
-              Hemen Ücretsiz Dene
-            </Link>
+            <div className="flex items-center gap-2 text-slate-400 font-medium text-sm mb-6 z-10">
+              <BatteryCharging size={18} />
+              Türkiye'nin Tüm Ağları Tek Haritada
+            </div>
+            
+            {/* CSS Marquee Effect */}
+            <div className="flex w-[200%] animate-marquee whitespace-nowrap opacity-60 hover:opacity-100 transition-opacity">
+              {[1, 2].map((i) => (
+                <div key={i} className="flex gap-12 px-6 items-center">
+                  <span className="text-2xl font-black text-white tracking-widest">ZES</span>
+                  <span className="text-2xl font-black text-white tracking-widest">EŞARJ</span>
+                  <span className="text-2xl font-black text-white tracking-widest">TRUGO</span>
+                  <span className="text-2xl font-black text-white tracking-widest">ASTOR</span>
+                  <span className="text-2xl font-black text-white tracking-widest">TESLA</span>
+                </div>
+              ))}
+            </div>
+            
+            <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-[#070b14] to-transparent z-10"></div>
+            <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-[#070b14] to-transparent z-10"></div>
           </motion.div>
-          <div className="grid grid-cols-2 gap-6">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.1 }}
-              whileHover={{ y: -5, scale: 1.02 }}
-              className="bg-slate-800/60 backdrop-blur-md border border-slate-700/50 p-8 rounded-3xl shadow-xl"
-            >
-              <BatteryCharging className="w-12 h-12 text-emerald-400 mb-6 drop-shadow-[0_0_15px_rgba(52,211,153,0.5)]" />
-              <h3 className="text-white font-bold text-3xl mb-3">%95<span className="text-xl text-slate-400 font-normal block mt-1">Doğruluk</span></h3>
-              <p className="text-slate-400 text-sm leading-relaxed">Gerçek tüketim verileriyle hesaplanmış hassas batarya tahmini.</p>
-            </motion.div>
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: 0.2 }}
-              whileHover={{ y: -5, scale: 1.02 }}
-              className="bg-slate-800/60 backdrop-blur-md border border-slate-700/50 p-8 rounded-3xl mt-12 shadow-xl"
-            >
-              <MapPin className="w-12 h-12 text-blue-400 mb-6 drop-shadow-[0_0_15px_rgba(96,165,250,0.5)]" />
-              <h3 className="text-white font-bold text-3xl mb-3">3500+<span className="text-xl text-slate-400 font-normal block mt-1">İstasyon</span></h3>
-              <p className="text-slate-400 text-sm leading-relaxed">Türkiye çapında tüm aktif DC ve AC şarj noktaları anlık haritada.</p>
-            </motion.div>
-          </div>
+
         </div>
       </div>
     </div>
-  );
-}
-
-function StepCard({ number, icon, title, description, delay }: { number: string, icon: React.ReactNode, title: string, description: string, delay: number }) {
-  return (
-    <motion.div 
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "0px" }}
-      transition={{ duration: 0.4, delay }}
-      whileHover={{ y: -5, boxShadow: "0 20px 40px -10px rgba(0, 0, 0, 0.1)" }}
-      className="relative flex flex-col items-center text-center p-8 bg-white/70 dark:bg-slate-900/70 backdrop-blur-md rounded-3xl shadow-sm border border-slate-100/50 dark:border-slate-800/50 z-10 transition-colors"
-    >
-      <div className="absolute -top-6 w-12 h-12 bg-white dark:bg-slate-800 border-4 border-blue-100 dark:border-blue-900 text-blue-600 dark:text-blue-400 font-bold text-xl rounded-full flex items-center justify-center shadow-md">
-        {number}
-      </div>
-      <div className="mt-8 mb-6 p-5 bg-blue-50 dark:bg-blue-900/20 rounded-2xl group-hover:scale-110 transition-transform">
-        {icon}
-      </div>
-      <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-4">{title}</h3>
-      <p className="text-slate-600 dark:text-slate-400 leading-relaxed text-lg">{description}</p>
-    </motion.div>
-  );
-}
-
-function BenefitItem({ text, delay }: { text: string, delay: number }) {
-  return (
-    <motion.li 
-      initial={{ opacity: 0, x: -15 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.3, delay }}
-      className="flex items-start gap-4"
-    >
-      <div className="bg-emerald-500/20 p-1 rounded-full shrink-0">
-        <CheckCircle2 className="w-6 h-6 text-emerald-400" />
-      </div>
-      <span className="text-slate-300 text-lg leading-snug">{text}</span>
-    </motion.li>
-  );
-}
-
-function FaqItem({ q, a }: { q: string, a: string }) {
-  return (
-    <motion.div 
-      variants={{
-        hidden: { opacity: 0, y: 15 },
-        visible: { opacity: 1, y: 0, transition: { duration: 0.3 } }
-      }}
-      whileHover={{ scale: 1.01 }}
-      className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border border-slate-200/60 dark:border-slate-700/60 rounded-2xl p-8 shadow-sm hover:shadow-md transition-shadow cursor-default"
-    >
-      <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-3">
-        <div className="bg-blue-100 dark:bg-blue-900/40 p-2 rounded-lg">
-          <HelpCircle className="w-6 h-6 text-blue-600 dark:text-blue-400" />
-        </div>
-        {q}
-      </h3>
-      <p className="text-slate-600 dark:text-slate-400 text-lg pl-14 leading-relaxed">{a}</p>
-    </motion.div>
   );
 }
