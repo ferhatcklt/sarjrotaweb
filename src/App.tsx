@@ -1,6 +1,8 @@
 import { Suspense, lazy } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import LandingPage from './pages/LandingPage';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
 
 // Harita sayfasını sadece ziyaret edildiğinde yükle (Lazy Loading)
 // Bu sayede Leaflet ve react-leaflet anasayfa bundle'ına dahil olmaz.
@@ -27,6 +29,8 @@ function App() {
             </Suspense>
           } 
         />
+        <Route path="/gizlilik-politikasi" element={<PrivacyPolicy />} />
+        <Route path="/kullanim-sartlari" element={<TermsOfService />} />
       </Routes>
     </BrowserRouter>
   );
