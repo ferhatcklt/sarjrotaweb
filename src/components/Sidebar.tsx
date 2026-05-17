@@ -12,7 +12,7 @@ const CONNECTOR_TYPES = [
 // Marka renk haritası (görsel ayrım için)
 // (Silindi, çünkü kullanılmıyor)
 
-const API_BASE = import.meta.env.DEV ? 'http://localhost:5261' : 'https://api.sarjrota.com.tr';
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
 export const Sidebar = () => {
   const {
