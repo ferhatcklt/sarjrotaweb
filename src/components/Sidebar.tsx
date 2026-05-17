@@ -375,7 +375,12 @@ export const Sidebar = () => {
                   <span className="font-semibold text-slate-900 dark:text-slate-100">Rota {alt.index + 1}</span>
                   <div className="text-right">
                     <div className="text-gray-600 dark:text-slate-300">{alt.totalDistanceKm} km · {formatHours(alt.totalJourneyHours ?? alt.estimatedDurationHours)}</div>
-                    <div className="text-[10px] text-gray-400 dark:text-slate-500">{alt.chargeStopsCount} şarj molası · Varış: %{alt.arrivalChargePercentage ?? '?'}</div>
+                    <div className="text-[10px] text-gray-400 dark:text-slate-500 flex flex-col items-end gap-0.5 mt-0.5">
+                      <span>{alt.chargeStopsCount} mola · Varış: %{alt.arrivalChargePercentage ?? '?'}</span>
+                      {alt.estimatedCost !== undefined && alt.estimatedCost > 0 && (
+                        <span className="text-emerald-600 dark:text-emerald-400 font-medium">₺{alt.estimatedCost.toLocaleString('tr-TR')}</span>
+                      )}
+                    </div>
                   </div>
                 </button>
               );
@@ -446,6 +451,19 @@ export const Sidebar = () => {
                       %{routeSummary.arrivalChargePercentage}
                     </span>
                   </div>
+                </div>
+              )}
+
+              {/* Tahmini Şarj Maliyeti */}
+              {routeSummary.estimatedCost !== undefined && routeSummary.estimatedCost > 0 && (
+                <div className="col-span-2 flex flex-col border-t border-brand-200/50 dark:border-brand-800/50 pt-2 mt-1">
+                  <span className="text-xs text-brand-600/80 dark:text-brand-400/80 uppercase">Tahmini Şarj Maliyeti</span>
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400 text-lg">
+                    ₺{routeSummary.estimatedCost.toLocaleString('tr-TR', { maximumFractionDigits: 2 })}
+                  </span>
+                  <span className="text-[10px] text-gray-400 dark:text-slate-500 mt-0.5">
+                    *Maliyet tahmini ortalama KW fiyatları üzerinden hesaplanmıştır.
+                  </span>
                 </div>
               )}
             </div>

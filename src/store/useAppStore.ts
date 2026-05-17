@@ -41,6 +41,7 @@ export interface RouteAlternative {
   totalJourneyHours: number;
   chargeStopsCount: number;
   arrivalChargePercentage?: number;
+  estimatedCost?: number;
 }
 
 export interface RouteSummary {
@@ -50,6 +51,7 @@ export interface RouteSummary {
   totalJourneyHours: number;
   chargeStopsCount: number;
   arrivalChargePercentage?: number;
+  estimatedCost?: number;
 }
 
 interface AppState {
@@ -146,6 +148,7 @@ export const useAppStore = create<AppState>()(
             totalJourneyHours:      alt.totalJourneyHours ?? alt.estimatedDurationHours,
             chargeStopsCount:       alt.chargeStopsCount,
             arrivalChargePercentage: alt.arrivalChargePercentage,
+            estimatedCost:          alt.estimatedCost,
           },
         });
       },
