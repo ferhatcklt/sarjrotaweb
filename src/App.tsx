@@ -5,6 +5,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import { useAppStore } from './store/useAppStore';
 import { Navbar } from './components/Navbar';
+import CookieConsent from './components/CookieConsent';
 
 // Harita sayfasını sadece ziyaret edildiğinde yükle (Lazy Loading)
 // Bu sayede Leaflet ve react-leaflet anasayfa bundle'ına dahil olmaz.
@@ -45,9 +46,11 @@ function App() {
               } 
             />
             <Route path="/gizlilik-politikasi" element={<PrivacyPolicy />} />
+            <Route path="/gizlilik" element={<PrivacyPolicy />} />
             <Route path="/kullanim-sartlari" element={<TermsOfService />} />
           </Routes>
         </main>
+        <CookieConsent />
       </div>
     </BrowserRouter>
   );
