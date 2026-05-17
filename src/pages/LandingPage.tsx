@@ -103,7 +103,7 @@ export default function LandingPage() {
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/80"></div>
               
-              <svg className="absolute inset-0 w-full h-full z-10" viewBox="0 0 100 100" preserveAspectRatio="none">
+              <svg className="absolute inset-0 w-full h-full z-0 opacity-50 pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
                 <motion.path 
                   d="M 10 80 Q 30 20 50 50 T 90 20" 
                   fill="none" stroke="url(#gradient)" strokeWidth="0.8" strokeDasharray="4 2"
@@ -137,6 +137,11 @@ export default function LandingPage() {
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-full bg-yellow-500/20 flex items-center justify-center text-yellow-400"><Zap size={16} /></div>
                     <div><div className="text-white text-sm font-bold">Bolu Dağı</div><div className="text-slate-500 text-xs">+35 dk Şarj Molası</div></div>
+                  </div>
+                  <div className="ml-4 w-0.5 h-6 bg-slate-800"></div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400"><MapPin size={16} /></div>
+                    <div><div className="text-white text-sm font-bold">Ankara</div><div className="text-slate-500 text-xs">Varış • %24 Şarj</div></div>
                   </div>
                 </div>
               </motion.div>
