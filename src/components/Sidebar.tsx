@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useMemo, useEffect } from 'react';
 import { useAppStore } from '../store/useAppStore';
 import type { Vehicle, RouteAlternative } from '../store/useAppStore';
@@ -51,13 +52,7 @@ export const Sidebar = () => {
       .catch(err => console.error('Markalar yüklenemedi:', err));
   }, []);
 
-  // Aktif Filtre: Şarj noktası veya marka değiştiğinde otomatik rota hesapla
-  useEffect(() => {
-    if (startLocation && endLocation && selectedVehicle && routeSummary) {
-      handleCalculateRoute();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [connectorTypes, selectedStationBrands]);
+
 
   const filteredVehicles = useMemo(() =>
     vehicles.filter(v =>
@@ -144,6 +139,15 @@ export const Sidebar = () => {
       setIsLoading(false);
     }
   };
+
+  // Aktif Filtre: Şarj noktası veya marka değiştiğinde otomatik rota hesapla
+  useEffect(() => {
+    if (startLocation && endLocation && selectedVehicle && routeSummary) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      handleCalculateRoute();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [connectorTypes, selectedStationBrands]);
 
   return (
     <div className="w-80 bg-white h-full shadow-xl flex flex-col z-10 overflow-y-auto">
