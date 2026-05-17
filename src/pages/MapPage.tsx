@@ -15,7 +15,7 @@ export default function MapPage() {
   }, []);
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-gray-100 font-sans relative">
+    <div className="flex flex-1 w-full overflow-hidden bg-gray-100 dark:bg-slate-900 font-sans relative transition-colors duration-300">
       {/* ── Desktop: Sidebar sabit sol panel ── */}
       <div className="hidden md:flex w-80 h-full shrink-0 z-10 shadow-2xl">
         <Sidebar />

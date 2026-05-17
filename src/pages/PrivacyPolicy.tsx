@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ShieldCheck, ChevronLeft } from 'lucide-react';
+import { Footer } from '../components/Footer';
 
 export default function PrivacyPolicy() {
   return (
@@ -70,6 +71,7 @@ export default function PrivacyPolicy() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

@@ -4,6 +4,7 @@ import LandingPage from './pages/LandingPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import { useAppStore } from './store/useAppStore';
+import { Navbar } from './components/Navbar';
 
 // Harita sayfasını sadece ziyaret edildiğinde yükle (Lazy Loading)
 // Bu sayede Leaflet ve react-leaflet anasayfa bundle'ına dahil olmaz.
@@ -30,19 +31,24 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LandingPage />} />
-        <Route 
-          path="/harita" 
-          element={
-            <Suspense fallback={<MapPageLoader />}>
-              <MapPage />
-            </Suspense>
-          } 
-        />
-        <Route path="/gizlilik-politikasi" element={<PrivacyPolicy />} />
-        <Route path="/kullanim-sartlari" element={<TermsOfService />} />
-      </Routes>
+      <div className="flex flex-col min-h-screen">
+        <Navbar />
+        <main className="flex-1 pt-16 flex flex-col">
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route 
+              path="/harita" 
+              element={
+                <Suspense fallback={<MapPageLoader />}>
+                  <MapPage />
+                </Suspense>
+              } 
+            />
+            <Route path="/gizlilik-politikasi" element={<PrivacyPolicy />} />
+            <Route path="/kullanim-sartlari" element={<TermsOfService />} />
+          </Routes>
+        </main>
+      </div>
     </BrowserRouter>
   );
 }
