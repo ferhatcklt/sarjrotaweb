@@ -8,6 +8,15 @@ import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import { useAppStore } from '../store/useAppStore';
 
+// Marka bazlı şarj tarifeleri (TL/kWh) — API ile senkron
+const CHARGE_PRICES: Record<string, number> = {
+  ZES: 14.50, 'Eşarj': 13.50, Trugo: 14.98,
+  Tesla: 12.30, Voltrun: 14.00, 'Sharz.net': 14.00, Astor: 14.00,
+};
+const DEFAULT_PRICE = 14.00;
+const getPrice = (brand?: string) =>
+  brand && CHARGE_PRICES[brand] ? CHARGE_PRICES[brand] : DEFAULT_PRICE;
+
 // Leaflet default icon fix
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -195,6 +204,10 @@ export const MapView = () => {
                   <strong style={{ fontSize: 12 }}>🔌 {station.name || 'İstasyon'}</strong><br />
                   <span style={{ color: '#666', fontSize: 11 }}>{station.brand}</span>
                   {connectors && <><br /><span style={{ fontSize: 10 }}>{connectors}</span></>}
+                  <br />
+                  <span style={{ fontSize: 11, color: '#059669', fontWeight: 600 }}>
+                    💰 {getPrice(station.brand).toFixed(2)} TL/kWh
+                  </span>
                 </div>
               </Popup>
             </Marker>
@@ -217,6 +230,9 @@ export const MapView = () => {
                   <strong style={{ fontSize: 13, color: '#1d4ed8' }}>🔋 Durak #{i + 1}: {stop.name || 'Şarj İstasyonu'}</strong><br />
                   <span style={{ color: '#666', fontSize: 12 }}>Marka: {stop.brand}</span><br />
                   {connectors && <><span style={{ fontSize: 11 }}>{connectors}</span><br/></>}
+                  <span style={{ fontSize: 11, color: '#059669', fontWeight: 600 }}>
+                    💰 {getPrice(stop.brand).toFixed(2)} TL/kWh
+                  </span><br/>
                   {stop.arrivalChargePercentage !== undefined && (
                     <span style={{ fontSize: 12, fontWeight: 'bold', color: '#047857' }}>
                       ⚡ Tahmini Kalan Şarj: %{stop.arrivalChargePercentage}

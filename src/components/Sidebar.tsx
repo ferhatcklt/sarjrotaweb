@@ -43,12 +43,14 @@ export const Sidebar = () => {
 
   // API'den araçları ve istasyon markalarını çek
   useEffect(() => {
-    fetch(`${API_BASE}/api/vehicles`)
+    const apiHeaders = { 'X-Api-Key': 'srota-2026-key' };
+
+    fetch(`${API_BASE}/api/vehicles`, { headers: apiHeaders })
       .then(r => r.json())
       .then(data => setVehicles(data))
       .catch(err => console.error('Araçlar yüklenemedi:', err));
 
-    fetch(`${API_BASE}/api/stations/brands`)
+    fetch(`${API_BASE}/api/stations/brands`, { headers: apiHeaders })
       .then(r => r.json())
       .then(data => setStationBrands(data))
       .catch(err => console.error('Markalar yüklenemedi:', err));
@@ -85,7 +87,7 @@ export const Sidebar = () => {
     try {
       const response = await fetch(`${API_BASE}/api/Route/calculate`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'X-Api-Key': 'srota-2026-key' },
         body: JSON.stringify({
           start: { lat: startLocation.lat, lng: startLocation.lng },
           end:   { lat: endLocation.lat,   lng: endLocation.lng   },
