@@ -14,6 +14,7 @@ const CONNECTOR_TYPES = [
 // (Silindi, çünkü kullanılmıyor)
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 export const Sidebar = () => {
   const {
@@ -43,7 +44,7 @@ export const Sidebar = () => {
 
   // API'den araçları ve istasyon markalarını çek
   useEffect(() => {
-    const apiHeaders = { 'X-Api-Key': 'srota-2026-key' };
+    const apiHeaders = { 'X-Api-Key': API_KEY };
 
     fetch(`${API_BASE}/api/vehicles`, { headers: apiHeaders })
       .then(r => r.json())
@@ -87,7 +88,7 @@ export const Sidebar = () => {
     try {
       const response = await fetch(`${API_BASE}/api/Route/calculate`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-Api-Key': 'srota-2026-key' },
+        headers: { 'Content-Type': 'application/json', 'X-Api-Key': API_KEY },
         body: JSON.stringify({
           start: { lat: startLocation.lat, lng: startLocation.lng },
           end:   { lat: endLocation.lat,   lng: endLocation.lng   },
