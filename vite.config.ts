@@ -23,11 +23,19 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom', 'zustand'],
-          leaflet: ['leaflet', 'react-leaflet'],
-          ui: ['lucide-react', 'framer-motion', 'clsx', 'tailwind-merge']
-        } as any
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react') || id.includes('react-dom') || id.includes('react-router-dom') || id.includes('zustand')) {
+              return 'vendor';
+            }
+            if (id.includes('leaflet') || id.includes('react-leaflet')) {
+              return 'leaflet';
+            }
+            if (id.includes('lucide-react') || id.includes('framer-motion') || id.includes('clsx') || id.includes('tailwind-merge')) {
+              return 'ui';
+            }
+          }
+        }
       }
     }
   }
