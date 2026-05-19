@@ -2,6 +2,7 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+// @ts-ignore
 import { VitePWA } from 'vite-plugin-pwa'
 
 // https://vite.dev/config/
@@ -12,7 +13,10 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'favicon-*.png'],
-      manifest: false // We already use public/site.webmanifest manually in index.html
+      manifest: false, // We already use public/site.webmanifest manually in index.html
+      devOptions: {
+        enabled: true
+      }
     })
   ],
   test: {
