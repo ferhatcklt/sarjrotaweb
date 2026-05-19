@@ -24,13 +24,13 @@ export default function MapPage() {
       {/* ── Mobil: Overlay sidebar ── */}
       {isMobileSidebarOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/50 backdrop-blur-sm md:hidden transition-opacity duration-300"
+          className="fixed inset-0 z-[70] bg-black/50 backdrop-blur-sm md:hidden transition-opacity duration-300"
           onClick={closeMobileSidebar}
         />
       )}
       <div
         className={`
-          fixed top-0 left-0 h-full w-[85vw] max-w-sm z-50
+          fixed top-0 left-0 h-full w-[85vw] max-w-sm z-[80]
           transform transition-transform duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)]
           md:hidden shadow-2xl
           ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}

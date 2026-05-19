@@ -14,10 +14,8 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link to="/" className="flex items-center gap-2 group hover:opacity-90 transition-opacity">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-600 to-blue-700 flex items-center justify-center shadow-lg shadow-blue-600/20 group-hover:shadow-blue-600/40 transition-shadow">
-              <Zap className="w-5 h-5 text-white" />
-            </div>
-            <span className="font-bold text-xl tracking-tight text-slate-900 dark:text-white">ŞarjRota</span>
+            <img src="/logo1.png" alt="ŞarjRota Logo" className="h-12 w-auto block dark:hidden group-hover:scale-105 transition-transform" />
+            <img src="/logo-white.png" alt="ŞarjRota Logo" className="h-12 w-auto hidden dark:block group-hover:scale-105 transition-transform" />
           </Link>
           <div className="flex items-center gap-4">
             <button

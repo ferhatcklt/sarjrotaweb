@@ -262,7 +262,7 @@ export const MapView = () => {
       {/* ── Mobil: Sidebar aç butonu ── */}
       <button
         onClick={toggleMobileSidebar}
-        className="md:hidden absolute top-4 left-4 z-[1000] bg-brand-600 text-white rounded-xl shadow-lg px-4 py-2.5 flex items-center gap-2 font-semibold text-sm"
+        className="md:hidden absolute top-4 left-4 z-[40] bg-brand-600 text-white rounded-xl shadow-lg px-4 py-2.5 flex items-center gap-2 font-semibold text-sm"
       >
         <span>☰</span>
         {isMobileSidebarOpen ? 'Kapat' : 'Rota Planla'}

@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useMemo, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useAppStore } from '../store/useAppStore';
 import type { Vehicle, RouteAlternative } from '../store/useAppStore';
-import { Settings, MapPin, Battery, Zap, Info, Search, Plug, X, Moon, Sun } from 'lucide-react';
+import { Settings, MapPin, Battery, Info, Search, Plug, X, Moon, Sun } from 'lucide-react';
 
 const CONNECTOR_TYPES = [
   { key: 'AC',  label: 'AC',     desc: 'Yavaş / Normal' },
@@ -159,10 +160,9 @@ export const Sidebar = () => {
       {/* Header */}
       <div className="p-6 bg-brand-600 dark:bg-slate-950 text-white shadow-md flex items-start justify-between transition-colors">
         <div>
-          <h1 className="text-2xl font-bold flex items-center gap-2">
-            <Zap className="text-yellow-300" />
-            Şarj Rota
-          </h1>
+          <Link to="/" className="flex items-center gap-2">
+            <img src="/logo-white.png" alt="ŞarjRota Logo" className="h-10 w-auto object-contain" />
+          </Link>
           <p className="text-brand-100 dark:text-slate-400 text-sm mt-1">sarjrota.com.tr</p>
         </div>
         <div className="flex items-center">
