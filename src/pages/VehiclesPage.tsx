@@ -111,6 +111,56 @@ export default function VehiclesPage() {
         )}
       </div>
       
+      {/* SEO Content Section */}
+      <div className="max-w-6xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 mb-8">
+        <div className="bg-white dark:bg-slate-900/40 rounded-3xl p-8 sm:p-12 border border-gray-100 dark:border-slate-800/60 shadow-sm prose prose-slate dark:prose-invert max-w-none">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-6 border-b border-gray-100 dark:border-slate-800 pb-4">
+            Elektrikli Araç Menzil ve Batarya Rehberi
+          </h2>
+          
+          <div className="space-y-6 text-slate-600 dark:text-slate-300 leading-relaxed">
+            <p className="text-lg">
+              Elektrikli araç (EV) devrimi tüm dünyada olduğu gibi Türkiye'de de hız kesmeden devam ediyor. Yeni bir elektrikli otomobil almayı düşünenlerin veya mevcut aracını daha verimli kullanmak isteyenlerin en çok araştırdığı konuların başında <strong>elektrikli araç menzili</strong> ve <strong>batarya kapasitesi</strong> geliyor. ŞarjRota olarak, Tesla, Togg, BMW, Mercedes-Benz, Hyundai ve daha birçok markanın sunduğu en güncel elektrikli otomobillerin teknik verilerini tek bir platformda topladık. Amacımız, elektrikli mobiliteye geçiş sürecinizde size en doğru ve şeffaf bilgiyi sunmaktır.
+            </p>
+            
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mt-10 mb-4">Elektrikli Araç Menzili Nedir ve Neden Önemlidir?</h3>
+            <p>
+              Elektrikli araç menzili, aracın bataryasının tam dolu (%100) durumundan tamamen boş (%0) durumuna gelene kadar kat edebileceği maksimum mesafeyi ifade eder. İçten yanmalı motorlu araçlardaki "bir depo yakıtla gidilebilecek mesafe" kavramının elektrikli araçlardaki karşılığıdır. Menzil, seyahat planlamalarınızın temelini oluşturur ve özellikle şehirlerarası yolculuklarda "menzil kaygısı" (range anxiety) yaşamamanız için aracınızın kapasitesini iyi tanımanız büyük önem taşır.
+            </p>
+
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mt-10 mb-4">WLTP Menzili ile Gerçek Menzil Arasındaki Farklar Nelerdir?</h3>
+            <p>
+              Otomobil markalarının kataloglarında gördüğünüz menzil değerleri genellikle <strong>WLTP (Worldwide Harmonised Light Vehicles Test Procedure)</strong> adı verilen uluslararası bir test standartına göre belirlenir. Bu standart, laboratuvar ortamında optimize edilmiş şartlar altında (ideal sıcaklık, düşük rüzgar direnci vb.) elde edilir. 
+            </p>
+            <p>
+              Ancak günlük kullanımda elde edeceğiniz <strong>gerçek menzil</strong> şu faktörlere bağlı olarak WLTP değerinden farklılık gösterebilir:
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mt-2">
+              <li><strong>Hava Durumu:</strong> Özellikle soğuk kış aylarında batarya kimyası gereği performans düşer. Ayrıca kabin ısıtması (kalorifer) ciddi enerji tüketir.</li>
+              <li><strong>Sürüş Hızı:</strong> Otoyol hızlarında (120 km/s ve üzeri) aerodinamik direnç arttığı için enerji tüketimi şehir içi kullanıma göre çok daha yüksektir.</li>
+              <li><strong>Klima ve Isıtma:</strong> Klima, koltuk ısıtma ve direksiyon ısıtma gibi donanımların aktif kullanımı menzili %10-15 oranında etkileyebilir.</li>
+              <li><strong>Sürüş Tarzı:</strong> Agresif hızlanmalar ve ani frenlemeler yerine, reküperasyon (geri kazanım) sistemini aktif kullanarak menzilinizi uzatabilirsiniz.</li>
+            </ul>
+            <p>
+              ŞarjRota algoritması, kullanıcılarına en güvenilir seyahat deneyimini sunmak için rota planlamalarında genellikle <strong>WLTP verisinin yaklaşık %90'ını gerçek menzil</strong> olarak kabul eder. Böylece yolda beklenmedik sürprizlerle karşılaşma riskiniz minimuma iner.
+            </p>
+
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mt-10 mb-4">Batarya Kapasitesi (kWh) Ne Anlama Gelir?</h3>
+            <p>
+              Batarya kapasitesi, bir elektrikli aracın depolayabileceği toplam elektrik enerjisi miktarını ifade eder ve <strong>kWh (Kilowatt-saat)</strong> birimiyle ölçülür. Tıpkı benzinli bir aracın yakıt deposunun litre cinsinden hacmi gibi düşünebilirsiniz. Örneğin; 60 kWh kapasiteli bir batarya, 90 kWh kapasiteli bir bataryaya göre daha az enerji depolar.
+            </p>
+            <p>
+              Ancak sadece yüksek batarya kapasitesi uzun menzil anlamına gelmez. Aracın aerodinamik yapısı, ağırlığı ve motor verimliliği de <strong>100 km'deki enerji tüketimi (kWh/100km)</strong> değerini belirler. Verimli bir araç, daha küçük bir batarya ile daha uzun mesafe kat edebilir.
+            </p>
+
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mt-10 mb-4">ŞarjRota ile Güvenli ve Kesintisiz Seyahat Planlaması</h3>
+            <p>
+              Sayfamızda yer alan arama ve filtreleme özelliklerini kullanarak ihtiyaçlarınıza en uygun elektrikli otomobili inceleyebilirsiniz. Elektrikli aracınızı seçtikten sonra, ŞarjRota platformu üzerinden rotanızı oluşturduğunuzda sistemimiz; aracınızın batarya kapasitesini, gerçekçi menzilini ve şarj istasyonlarının konumlarını analiz ederek size en ideal şarj duraklarını otomatik olarak önerir. Elektrikli sürüş deneyiminizi stressiz ve keyifli hale getirmek için verilerimizi sürekli güncelliyoruz.
+            </p>
+          </div>
+        </div>
+      </div>
+      
       <div className="mt-auto border-t border-gray-200 dark:border-slate-800/50 bg-white dark:bg-[#02040a]">
         <Footer />
       </div>

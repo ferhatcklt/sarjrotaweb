@@ -145,6 +145,63 @@ export default function PricesPage() {
         )}
       </div>
       
+      {/* SEO Content Section */}
+      <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 mb-8">
+        <div className="bg-white dark:bg-slate-900/40 rounded-3xl p-8 sm:p-12 border border-gray-100 dark:border-slate-800/60 shadow-sm prose prose-slate dark:prose-invert max-w-none">
+          <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mb-6 border-b border-gray-100 dark:border-slate-800 pb-4">
+            Elektrikli Araç Şarj İstasyonu Fiyatları ve Tarifeler Rehberi
+          </h2>
+          
+          <div className="space-y-6 text-slate-600 dark:text-slate-300 leading-relaxed">
+            <p className="text-lg">
+              Elektrikli araç pazarının büyümesiyle birlikte Türkiye'nin dört bir yanında şarj istasyonları ağı hızla genişliyor. ZES, Eşarj, Trugo, Tesla, Voltrun, Ovolt ve daha birçok operatör, elektrikli araç sahiplerine farklı hizmet kaliteleri ve fiyatlandırma politikaları sunuyor. ŞarjRota olarak, karmaşıklaşan bu tarifeleri sadeleştiriyor ve en güncel <strong>kW (kilowatt) başına şarj ücretlerini</strong> tek bir ekranda karşılaştırmanıza olanak tanıyoruz. Seyahatinizden önce güncel şarj fiyatlarını bilmek, rota maliyetinizi doğru hesaplamanız için kritik bir adımdır.
+            </p>
+            
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mt-10 mb-4">Şarj İstasyonu Fiyatları Nasıl Belirlenir?</h3>
+            <p>
+              Şarj istasyonu operatörlerinin belirlediği fiyatlar genellikle EPDK (Enerji Piyasası Düzenleme Kurumu) tarafından belirlenen ticari elektrik tarifeleri baz alınarak hesaplanır. Ancak fiyatı etkileyen asıl faktör, <strong>şarjın hızı (AC veya DC)</strong> ve istasyonun altyapı maliyetidir. Operatörler, yüksek hızlı DC şarj istasyonları kurarken çok ciddi altyapı ve trafo yatırımları yaparlar. Bu nedenle aynı operatörün DC (hızlı) şarj tarifesi, AC (normal) şarj tarifesine göre her zaman daha yüksektir.
+            </p>
+
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mt-10 mb-4">AC Şarj (Alternatif Akım) Nedir? Neden Daha Ekonomiktir?</h3>
+            <p>
+              AC şarj, şehir şebekesinden gelen alternatif akımın aracın üzerindeki yerleşik şarj cihazı (on-board charger) üzerinden doğru akıma çevrilerek bataryaya iletilmesi işlemidir. 
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mt-2">
+              <li><strong>Hız:</strong> Genellikle 11 kW ile 22 kW arasında güç sunarlar. Aracın bataryasını doldurması saatler (ortalama 4-8 saat) sürer.</li>
+              <li><strong>Kullanım Alanı:</strong> Evler, iş yerleri, oteller, AVM otoparkları ve sokak aralarında uzun süreli park durumlarında tercih edilir.</li>
+              <li><strong>Maliyet:</strong> Altyapı kurulumu DC istasyonlara göre çok daha ucuz olduğu için operatörler AC şarj hizmetini daha uygun fiyata sunarlar. Elektrikli aracınızı en ekonomik şarj etme yöntemlerinden biridir.</li>
+            </ul>
+
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mt-10 mb-4">DC Hızlı Şarj (Doğru Akım) Nedir ve Ne Zaman Kullanılmalıdır?</h3>
+            <p>
+              DC şarj istasyonları, alternatif akımı istasyonun kendi içindeki devasa güç ünitelerinde doğru akıma çevirir ve enerjiyi doğrudan aracın bataryasına gönderir.
+            </p>
+            <ul className="list-disc pl-6 space-y-2 mt-2">
+              <li><strong>Hız:</strong> 50 kW, 120 kW, 180 kW hatta 350+ kW gibi çok yüksek güç değerlerine ulaşabilirler. Uygun bir araçla 30-40 dakika gibi kısa bir sürede bataryanızı %20'den %80'e kadar doldurabilirsiniz.</li>
+              <li><strong>Kullanım Alanı:</strong> Özellikle şehirlerarası yolculuklarda, otoyol dinlenme tesislerinde ve zamanın kısıtlı olduğu anlarda kullanılır.</li>
+              <li><strong>Maliyet:</strong> İstasyon kurulum, trafo ve bakım maliyetleri çok yüksek olduğu için kW birim fiyatı AC şarja kıyasla daha pahalıdır.</li>
+            </ul>
+
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mt-10 mb-4">Elektrikli Araç Şarj Maliyeti Nasıl Hesaplanır? (Örnekli Anlatım)</h3>
+            <p>
+              Aracınızı dışarıdaki ticari bir istasyonda şarj etmenin maliyetini hesaplamak oldukça basittir. İhtiyacınız olan formül şudur: <strong>Şarj Edilen Enerji Miktarı (kWh) x İstasyonun kW Birim Fiyatı (₺)</strong>
+            </p>
+            <p className="bg-gray-50 dark:bg-slate-800/50 p-4 rounded-lg mt-2 border border-gray-200 dark:border-slate-700">
+              <strong>Örnek Senaryo:</strong> Aracınızın batarya kapasitesi 60 kWh olsun. Şarj istasyonuna geldiğinizde bataryanız %20 dolulukta, hedefiniz ise %80'e kadar şarj etmek. 
+              <br/><br/>
+              İhtiyacınız olan enerji = 60 kWh x %60 = <strong>36 kWh</strong><br/>
+              Tercih ettiğiniz DC istasyonunun güncel fiyatı: <strong>14.50 ₺ / kWh</strong><br/>
+              Toplam Ödenecek Tutar = 36 kWh x 14.50 ₺ = <strong>522 ₺</strong>
+            </p>
+
+            <h3 className="text-xl font-bold text-slate-800 dark:text-slate-100 mt-10 mb-4">Şarj Ağları Arasında Fiyat Karşılaştırması Yapmanın Avantajları</h3>
+            <p>
+              Uzun yola çıkmadan önce ŞarjRota platformunu kullanarak güzergahınızdaki farklı operatörlerin güncel tarifelerini inceleyebilirsiniz. Bazen aynı dinlenme tesisinde bulunan farklı markalara ait istasyonlar arasında kW başına ciddi fiyat farkları (örn: kW başına 2-3 TL) olabilmektedir. Tam şarjda bu fark cebinizde 150-200 TL'ye kadar tasarruf etmenizi sağlayabilir. En güncel AC ve DC şarj fiyatlarını bu sayfadan takip edebilir, bütçe dostu rotalar planlayabilirsiniz.
+            </p>
+          </div>
+        </div>
+      </div>
+
       <div className="mt-auto border-t border-gray-200 dark:border-slate-800/50 bg-white dark:bg-[#02040a]">
         <Footer />
       </div>
