@@ -1,11 +1,16 @@
 import { Link } from 'react-router-dom';
 import { ShieldCheck, ChevronLeft } from 'lucide-react';
 import { Footer } from '../components/Footer';
+import { SEO } from '../components/SEO';
 
 export default function PrivacyPolicy() {
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-200 transition-colors">
-      <div className="max-w-4xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-[#030712] font-['Inter'] transition-colors flex flex-col">
+      <SEO 
+        title="Gizlilik Politikası | ŞarjRota"
+        description="ŞarjRota gizlilik politikası, verilerinizin nasıl işlendiği ve korunduğu hakkında detaylı bilgiler içerir."
+      />
+      <div className="flex-1 max-w-4xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-16">
         <Link to="/" className="inline-flex items-center text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 mb-8 font-medium transition-colors">
           <ChevronLeft className="w-5 h-5 mr-1" />
           Anasayfaya Dön

@@ -45,12 +45,12 @@ export const Sidebar = () => {
 
   // API'den araçları ve istasyon markalarını çek
   useEffect(() => {
-    fetch(`${API_BASE}/api/vehicles?key=${API_KEY}`)
+    fetch(`${API_BASE}/api/vehicles`, { headers: { 'X-Api-Key': API_KEY } })
       .then(r => r.json())
       .then(data => setVehicles(data))
       .catch(err => console.error('Araçlar yüklenemedi:', err));
 
-    fetch(`${API_BASE}/api/stations/brands?key=${API_KEY}`)
+    fetch(`${API_BASE}/api/stations/brands`, { headers: { 'X-Api-Key': API_KEY } })
       .then(r => r.json())
       .then(data => setStationBrands(data))
       .catch(err => console.error('Markalar yüklenemedi:', err));
@@ -85,9 +85,12 @@ export const Sidebar = () => {
 
     setIsLoading(true);
     try {
-      const response = await fetch(`${API_BASE}/api/Route/calculate?key=${API_KEY}`, {
+      const response = await fetch(`${API_BASE}/api/Route/calculate`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-Api-Key': API_KEY
+        },
         body: JSON.stringify({
           start: { lat: startLocation.lat, lng: startLocation.lng },
           end:   { lat: endLocation.lat,   lng: endLocation.lng   },

@@ -27,6 +27,7 @@ export interface Station {
   acConnectorCount?: number;
   dcConnectorCount?: number;
   hpcConnectorCount?: number;
+  maxPowerKw?: number;
   arrivalChargePercentage?: number;
 }
 

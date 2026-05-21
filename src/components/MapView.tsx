@@ -10,8 +10,8 @@ import { useAppStore } from '../store/useAppStore';
 
 // Marka bazlı şarj tarifeleri (TL/kWh) — API ile senkron
 const CHARGE_PRICES: Record<string, number> = {
-  ZES: 14.50, 'Eşarj': 13.50, Trugo: 14.98,
-  Tesla: 12.30, Voltrun: 14.00, 'Sharz.net': 14.00, Astor: 14.00,
+  ZES: 16.49, 'Eşarj': 13.50, Trugo: 14.98,
+  Tesla: 12.30, Voltrun: 14.00, 'Sharz.net': 10.99, Astor: 14.00, Ovolt: 13.99
 };
 const DEFAULT_PRICE = 14.00;
 const getPrice = (brand?: string) =>
@@ -197,6 +197,7 @@ export const MapView = () => {
           const hpc = station.hpcConnectorCount ?? 0;
           const connectors = [ac > 0 && `AC×${ac}`, dc > 0 && `DC×${dc}`, hpc > 0 && `HPC×${hpc}`]
             .filter(Boolean).join('  ');
+          const maxPowerText = station.maxPowerKw ? `⚡ Max Güç: ${station.maxPowerKw} kW` : '';
           return (
             <Marker key={`nearby-${station.id ?? i}`} position={[lat, lng]} icon={nearbyIcon}>
               <Popup minWidth={160}>
@@ -204,6 +205,7 @@ export const MapView = () => {
                   <strong style={{ fontSize: 12 }}>🔌 {station.name || 'İstasyon'}</strong><br />
                   <span style={{ color: '#666', fontSize: 11 }}>{station.brand}</span>
                   {connectors && <><br /><span style={{ fontSize: 10 }}>{connectors}</span></>}
+                  {maxPowerText && <><br /><span style={{ fontSize: 10, color: '#b45309', fontWeight: 600 }}>{maxPowerText}</span></>}
                   <br />
                   <span style={{ fontSize: 11, color: '#059669', fontWeight: 600 }}>
                     💰 {getPrice(station.brand).toFixed(2)} TL/kWh
@@ -223,6 +225,7 @@ export const MapView = () => {
           const hpc = stop.hpcConnectorCount ?? 0;
           const connectors = [ac > 0 && `AC×${ac}`, dc > 0 && `DC×${dc}`, hpc > 0 && `HPC×${hpc}`]
             .filter(Boolean).join('  ');
+          const maxPowerText = stop.maxPowerKw ? `⚡ Max Güç: ${stop.maxPowerKw} kW` : '';
           return (
             <Marker key={`stop-${stop.id ?? i}`} position={[lat, lng]} icon={makeStopIcon(i)} zIndexOffset={1000}>
               <Popup minWidth={180}>
@@ -230,6 +233,7 @@ export const MapView = () => {
                   <strong style={{ fontSize: 13, color: '#1d4ed8' }}>🔋 Durak #{i + 1}: {stop.name || 'Şarj İstasyonu'}</strong><br />
                   <span style={{ color: '#666', fontSize: 12 }}>Marka: {stop.brand}</span><br />
                   {connectors && <><span style={{ fontSize: 11 }}>{connectors}</span><br/></>}
+                  {maxPowerText && <><span style={{ fontSize: 11, color: '#b45309', fontWeight: 600 }}>{maxPowerText}</span><br/></>}
                   <span style={{ fontSize: 11, color: '#059669', fontWeight: 600 }}>
                     💰 {getPrice(stop.brand).toFixed(2)} TL/kWh
                   </span><br/>

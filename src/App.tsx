@@ -1,8 +1,14 @@
 import { Suspense, lazy, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import LandingPage from './pages/LandingPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
+import PricesPage from './pages/PricesPage';
+import VehiclesPage from './pages/VehiclesPage';
+import AboutPage from './pages/AboutPage';
+import GuidePage from './pages/GuidePage';
+import GuideArticlePage from './pages/GuideArticlePage';
 import { useAppStore } from './store/useAppStore';
 import { Navbar } from './components/Navbar';
 import CookieConsent from './components/CookieConsent';
@@ -31,28 +37,35 @@ function App() {
   }, [theme]);
 
   return (
-    <BrowserRouter>
-      <div className="flex flex-col min-h-screen">
-        <Navbar />
-        <main className="flex-1 pt-16 flex flex-col">
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route 
-              path="/harita" 
-              element={
-                <Suspense fallback={<MapPageLoader />}>
-                  <MapPage />
-                </Suspense>
-              } 
-            />
-            <Route path="/gizlilik-politikasi" element={<PrivacyPolicy />} />
-            <Route path="/gizlilik" element={<PrivacyPolicy />} />
-            <Route path="/kullanim-sartlari" element={<TermsOfService />} />
-          </Routes>
-        </main>
-        <CookieConsent />
-      </div>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <div className="flex flex-col min-h-screen">
+          <Navbar />
+          <main className="flex-1 pt-16 flex flex-col">
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route 
+                path="/harita" 
+                element={
+                  <Suspense fallback={<MapPageLoader />}>
+                    <MapPage />
+                  </Suspense>
+                } 
+              />
+              <Route path="/tarifeler" element={<PricesPage />} />
+              <Route path="/araclar" element={<VehiclesPage />} />
+              <Route path="/hakkimizda" element={<AboutPage />} />
+              <Route path="/rehber" element={<GuidePage />} />
+              <Route path="/rehber/:slug" element={<GuideArticlePage />} />
+              <Route path="/gizlilik-politikasi" element={<PrivacyPolicy />} />
+              <Route path="/gizlilik" element={<PrivacyPolicy />} />
+              <Route path="/kullanim-sartlari" element={<TermsOfService />} />
+            </Routes>
+          </main>
+          <CookieConsent />
+        </div>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 

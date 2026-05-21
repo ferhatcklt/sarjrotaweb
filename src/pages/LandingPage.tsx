@@ -6,6 +6,7 @@ import {
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { Footer } from '../components/Footer';
+import { SEO } from '../components/SEO';
 
 export default function LandingPage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -23,6 +24,10 @@ export default function LandingPage() {
 
   return (
     <div className="relative min-h-screen bg-[#030712] overflow-x-hidden selection:bg-brand-500/30 font-['Inter']">
+      <SEO 
+        title="Elektrikli Araç Rota Planlayıcı & Akıllı Şarj Asistanı | ŞarjRota"
+        description="ŞarjRota, elektrikli aracınızın (EV) menzil, topografya ve hava durumu verilerini analiz ederek en ideal şarj noktalarını ve duraklama sürelerini saniyeler içinde planlar."
+      />
       
       {/* ── ARKA PLAN (SABİT) ── */}
       <div className="fixed inset-0 z-0 pointer-events-none opacity-60">

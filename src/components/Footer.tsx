@@ -13,7 +13,17 @@ export function Footer() {
           </p>
         </div>
 
-        <div className="flex flex-col md:flex-row items-center gap-4 md:gap-8 text-sm">
+        <div className="flex flex-col md:flex-row items-center gap-4 md:gap-6 text-sm">
+          <Link to="/araclar" className="text-slate-400 hover:text-white transition-colors">
+            Araçlar
+          </Link>
+          <Link to="/rehber" className="text-slate-400 hover:text-white transition-colors">
+            Rehber
+          </Link>
+          <Link to="/hakkimizda" className="text-slate-400 hover:text-white transition-colors">
+            Hakkımızda
+          </Link>
+          <span className="text-slate-600 hidden md:inline">•</span>
           <Link to="/gizlilik-politikasi" className="text-slate-400 hover:text-white transition-colors">
             Gizlilik Politikası
           </Link>

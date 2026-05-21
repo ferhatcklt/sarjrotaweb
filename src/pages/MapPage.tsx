@@ -2,6 +2,7 @@ import { Sidebar } from '../components/Sidebar';
 import { MapView } from '../components/MapView';
 import { useAppStore } from '../store/useAppStore';
 import { useEffect } from 'react';
+import { SEO } from '../components/SEO';
 
 export default function MapPage() {
   const { isMobileSidebarOpen, closeMobileSidebar } = useAppStore();
@@ -16,6 +17,10 @@ export default function MapPage() {
 
   return (
     <div className="flex w-full overflow-hidden bg-gray-100 dark:bg-slate-900 font-sans relative transition-colors duration-300" style={{ height: 'calc(100vh - 64px)' }}>
+      <SEO 
+        title="Canlı Harita ve Rota Oluşturucu | ŞarjRota"
+        description="Elektrikli aracınız için rota oluşturun. Tüm şarj ağlarını, güncel fiyatları, topografya ve hava durumu etkilerini hesaba katarak en iyi rotayı bulun."
+      />
       {/* ── Desktop: Sidebar sabit sol panel ── */}
       <div className="hidden md:flex w-80 h-full shrink-0 z-10 shadow-2xl">
         <Sidebar />

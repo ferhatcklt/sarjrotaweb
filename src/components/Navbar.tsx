@@ -18,6 +18,20 @@ export function Navbar() {
             <img src="/logo-white.png" alt="ŞarjRota Logo" className="h-12 w-auto hidden dark:block group-hover:scale-105 transition-transform" />
           </Link>
           <div className="flex items-center gap-4">
+            <div className="hidden md:flex items-center gap-4">
+              <Link to="/araclar" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                Araçlar
+              </Link>
+              <Link to="/tarifeler" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                Tarifeler
+              </Link>
+              <Link to="/rehber" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                Rehber
+              </Link>
+              <Link to="/hakkimizda" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                Hakkımızda
+              </Link>
+            </div>
             <button
               onClick={toggleTheme}
               className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
