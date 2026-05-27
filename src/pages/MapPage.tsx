@@ -16,7 +16,7 @@ export default function MapPage() {
   }, []);
 
   return (
-    <div className="flex w-full overflow-hidden bg-gray-100 dark:bg-slate-900 font-sans relative transition-colors duration-300" style={{ height: 'calc(100vh - 64px)' }}>
+    <div className="flex w-full overflow-hidden bg-gray-100 dark:bg-slate-900 font-sans relative transition-colors duration-300" style={{ height: 'calc(100dvh - 64px)' }}>
       <SEO 
         title="Canlı Harita ve Rota Oluşturucu | ŞarjRota"
         description="Elektrikli aracınız için rota oluşturun. Tüm şarj ağlarını, güncel fiyatları, topografya ve hava durumu etkilerini hesaba katarak en iyi rotayı bulun."
@@ -35,9 +35,9 @@ export default function MapPage() {
       )}
       <div
         className={`
-          fixed top-0 left-0 h-full w-[85vw] max-w-sm z-[80]
+          fixed top-0 left-0 h-[100dvh] w-[85vw] max-w-sm z-[80]
           transform transition-transform duration-300 ease-[cubic-bezier(0.25,0.8,0.25,1)]
-          md:hidden shadow-2xl
+          md:hidden shadow-2xl flex flex-col
           ${isMobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
       >

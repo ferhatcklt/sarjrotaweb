@@ -1,3 +1,15 @@
+# ŞarjRota - robots.txt
+# https://www.sarjrota.com.tr
+
 User-agent: *
 Allow: /
+
+# Sitemap
 Sitemap: https://www.sarjrota.com.tr/sitemap.xml
+
+# Crawl-delay (arama motoru botlarının siteyi çok hızlı taramaması için)
+Crawl-delay: 1
+
+# Gereksiz/teknik sayfaları indexleme
+Disallow: /assets/
+Disallow: /src/

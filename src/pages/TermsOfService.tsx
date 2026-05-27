@@ -74,10 +74,10 @@ export default function TermsOfService() {
               Kullanıcılar sistemi kötüye kullanamaz (örneğin otomatize edilmiş aşırı bot istekleri atmak, sistem API'sini tersine mühendislik ile yetkisiz kopyalamak). Bu tarz durumlarda IP adresiniz sistemden uzaklaştırılabilir (Rate Limit ve IP Ban).
             </p>
 
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white mt-8 mb-4">6. Çerezler ve İzleme</h2>
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-white mt-8 mb-4">6. Çerezler, İzleme ve Hata Raporlama</h2>
             <p className="mb-4 text-slate-600 dark:text-slate-300 leading-relaxed">
-              Bu web sitesi, kullanıcı deneyimini iyileştirmek için zorunlu çerezler (Local Storage) ve isteğe bağlı analitik çerezler (Google Analytics) kullanmaktadır. 
-              Siteye ilk girişte gösterilen çerez onay bildirimi aracılığıyla tercihlerinizi belirleyebilirsiniz. 
+              Bu web sitesi ve mobil uygulamamız, kullanıcı deneyimini iyileştirmek ve hataları tespit etmek için zorunlu çerezler (Local Storage), analitik araçlar (Google Analytics, Firebase) ve hata raporlama servisleri (Crashlytics) kullanmaktadır. 
+              Siteye ilk girişte gösterilen çerez onay bildirimi aracılığıyla tercihlerinizi belirleyebilirsiniz. Mobil uygulamamızda toplanan hata raporları anonim olup kişisel veri içermez. 
               Detaylı bilgi için <Link to="/gizlilik" className="text-blue-600 dark:text-blue-400 underline">Gizlilik Politikamızı</Link> inceleyiniz.
             </p>
 

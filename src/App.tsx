@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import LandingPage from './pages/LandingPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -7,8 +7,11 @@ import TermsOfService from './pages/TermsOfService';
 import PricesPage from './pages/PricesPage';
 import VehiclesPage from './pages/VehiclesPage';
 import AboutPage from './pages/AboutPage';
-import GuidePage from './pages/GuidePage';
-import GuideArticlePage from './pages/GuideArticlePage';
+import BlogPage from './pages/BlogPage';
+import BlogArticlePage from './pages/BlogArticlePage';
+import DownloadPage from './pages/DownloadPage';
+import NotFoundPage from './pages/NotFoundPage';
+import RehberRedirect from './pages/RehberRedirect';
 import { useAppStore } from './store/useAppStore';
 import { Navbar } from './components/Navbar';
 import CookieConsent from './components/CookieConsent';
@@ -55,11 +58,16 @@ function App() {
               <Route path="/tarifeler" element={<PricesPage />} />
               <Route path="/araclar" element={<VehiclesPage />} />
               <Route path="/hakkimizda" element={<AboutPage />} />
-              <Route path="/rehber" element={<GuidePage />} />
-              <Route path="/rehber/:slug" element={<GuideArticlePage />} />
+              <Route path="/blog" element={<BlogPage />} />
+              <Route path="/blog/:slug" element={<BlogArticlePage />} />
+              {/* Eski /rehber URL'lerini /blog'a yönlendir (SEO 301 redirect) */}
+              <Route path="/rehber" element={<Navigate to="/blog" replace />} />
+              <Route path="/rehber/:slug" element={<RehberRedirect />} />
               <Route path="/gizlilik-politikasi" element={<PrivacyPolicy />} />
               <Route path="/gizlilik" element={<PrivacyPolicy />} />
               <Route path="/kullanim-sartlari" element={<TermsOfService />} />
+              <Route path="/indir" element={<DownloadPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>
           <CookieConsent />

@@ -61,6 +61,11 @@ interface AppState {
   selectedVehicle: Vehicle | null;
   selectedStationBrands: string[];
 
+  // Sistem Önbelleği (Caching)
+  allVehicles: Vehicle[] | null;
+  allBrands: string[] | null;
+  allStations: Station[] | null;
+
   // Rota verisi
   route: Location[];
   stops: Station[];
@@ -85,6 +90,11 @@ interface AppState {
   setEndLocation: (loc: Location | null) => void;
   setSelectedVehicle: (vehicle: Vehicle | null) => void;
   toggleStationBrand: (brand: string) => void;
+  
+  // Önbellek setters
+  setAllVehicles: (vehicles: Vehicle[]) => void;
+  setAllBrands: (brands: string[]) => void;
+  setAllStations: (stations: Station[]) => void;
   setRouteData: (route: Location[], stops: Station[], summary: RouteSummary, alternatives?: RouteAlternative[], nearbyStations?: Station[]) => void;
   selectAlternative: (index: number) => void;
   setSelectingMode: (mode: 'start' | 'end' | null) => void;
@@ -99,6 +109,10 @@ export const useAppStore = create<AppState>()(
       endLocation: null,
       selectedVehicle: null,
       selectedStationBrands: [],
+      
+      allVehicles: null,
+      allBrands: null,
+      allStations: null,
       route: [],
       stops: [],
       nearbyStations: [],
@@ -130,6 +144,10 @@ export const useAppStore = create<AppState>()(
           : [...state.selectedStationBrands, brand],
       })),
 
+      setAllVehicles: (vehicles) => set({ allVehicles: vehicles }),
+      setAllBrands: (brands) => set({ allBrands: brands }),
+      setAllStations: (stations) => set({ allStations: stations }),
+
       setRouteData: (route, stops, summary, alternatives = [], nearbyStations = []) =>
         set({ route, stops, routeSummary: summary, alternatives, selectedAlternativeIndex: 0, nearbyStations }),
 
@@ -159,8 +177,13 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: 'sarjrota-storage',
-      // Sadece temayı sakla
-      partialize: (state) => ({ theme: state.theme }),
+      // Temayı ve önbelleğe alınmış sistem verilerini sakla (sayfa yenilendiğinde veritabanına gidilmesin)
+      partialize: (state) => ({ 
+        theme: state.theme,
+        allVehicles: state.allVehicles,
+        allBrands: state.allBrands,
+        allStations: state.allStations
+      }),
     }
   )
 );

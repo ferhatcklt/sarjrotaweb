@@ -152,14 +152,19 @@ export const Sidebar = () => {
   // Aktif Filtre: Şarj noktası veya marka değiştiğinde otomatik rota hesapla
   useEffect(() => {
     if (startLocation && endLocation && selectedVehicle && routeSummary) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       handleCalculateRoute();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [connectorTypes, selectedStationBrands]);
 
+  // Yeni: Kullanıcı Haritadan veya Menüden Başlangıç/Varış/Araç seçtiğinde otomatik rota hesapla
+  useEffect(() => {
+    if (startLocation && endLocation && selectedVehicle) {
+      handleCalculateRoute();
+    }
+  }, [startLocation, endLocation, selectedVehicle]);
+
   return (
-    <div className="w-80 bg-white dark:bg-slate-900 h-full shadow-xl flex flex-col z-10 overflow-y-auto transition-colors duration-300 border-r border-slate-200 dark:border-slate-800">
+    <div className="w-full bg-white dark:bg-slate-900 h-full shadow-xl flex flex-col z-10 transition-colors duration-300 border-r border-slate-200 dark:border-slate-800">
       {/* Header */}
       <div className="p-6 bg-brand-600 dark:bg-slate-950 text-white shadow-md flex items-start justify-between transition-colors">
         <div>
@@ -186,7 +191,7 @@ export const Sidebar = () => {
         </div>
       </div>
 
-      <div className="p-6 flex-1 flex flex-col gap-6">
+      <div className="p-6 flex-1 flex flex-col gap-6 overflow-y-auto custom-scrollbar">
 
         {/* ── Rota ── */}
         <section>
@@ -361,7 +366,7 @@ export const Sidebar = () => {
       </div>
 
       {/* ── Alt Panel ── */}
-      <div className="p-4 border-t border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-slate-900 flex flex-col gap-3 transition-colors">
+      <div className="p-4 border-t border-gray-200 dark:border-slate-800 bg-gray-50 dark:bg-slate-900 flex flex-col gap-3 transition-colors shrink-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] dark:shadow-none z-20">
         {/* Rota alternatif seçici */}
         {alternatives.length > 1 && (
           <div className="flex flex-col gap-1.5">
