@@ -30,6 +30,10 @@ export function Navbar() {
               <Link to="/tarifeler" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 Tarifeler
               </Link>
+              <Link to="/yenilikler" className="relative text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors flex items-center">
+                Yenilikler
+                <span className="absolute -top-2.5 -right-5 bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-full shadow-sm">YENİ</span>
+              </Link>
               <Link to="/blog" className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 Blog
               </Link>
@@ -76,6 +80,10 @@ export function Navbar() {
             </Link>
             <Link to="/tarifeler" onClick={closeMenu} className="block text-base font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400">
               Tarifeler
+            </Link>
+            <Link to="/yenilikler" onClick={closeMenu} className="flex items-center gap-2 text-base font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400">
+              Yenilikler
+              <span className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">YENİ</span>
             </Link>
             <Link to="/blog" onClick={closeMenu} className="block text-base font-medium text-slate-600 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400">
               Blog

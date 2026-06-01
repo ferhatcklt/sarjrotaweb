@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
-import { 
-  Zap, MapPin, BatteryCharging, ChevronRight, Activity, Cpu, 
-  Car, Compass, CloudLightning, ShieldCheck, HelpCircle 
+import {
+  Zap, MapPin, BatteryCharging, ChevronRight, Activity, Cpu,
+  Car, Compass, CloudLightning, ShieldCheck, HelpCircle
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { Footer } from '../components/Footer';
 import { SEO } from '../components/SEO';
+import AdBanner from '../components/AdBanner';
 
 export default function LandingPage() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -24,24 +25,24 @@ export default function LandingPage() {
 
   return (
     <div className="relative min-h-screen bg-[#030712] overflow-x-hidden selection:bg-brand-500/30 font-['Inter']">
-      <SEO 
+      <SEO
         title="Elektrikli Araç Rota Planlayıcı & Akıllı Şarj Asistanı | ŞarjRota"
         description="ŞarjRota, elektrikli aracınızın (EV) menzil, topografya ve hava durumu verilerini analiz ederek en ideal şarj noktalarını ve duraklama sürelerini saniyeler içinde planlar."
       />
-      
+
       {/* ── ARKA PLAN (SABİT) ── */}
       <div className="fixed inset-0 z-0 pointer-events-none opacity-60">
-        <div className="absolute inset-0" style={{ 
-          backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)', 
-          backgroundSize: '40px 40px' 
+        <div className="absolute inset-0" style={{
+          backgroundImage: 'linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px)',
+          backgroundSize: '40px 40px'
         }}></div>
-        
-        <motion.div 
+
+        <motion.div
           animate={{ x: [0, 50, -50, 0], y: [0, -50, 50, 0], scale: [1, 1.2, 0.8, 1] }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
           className="absolute -top-[10%] -left-[10%] w-[50vw] h-[50vw] rounded-full bg-blue-600/20 blur-[120px]"
         />
-        <motion.div 
+        <motion.div
           animate={{ x: [0, -70, 70, 0], y: [0, 70, -70, 0], scale: [1, 0.9, 1.3, 1] }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
           className="absolute top-[40%] -right-[10%] w-[40vw] h-[40vw] rounded-full bg-sky-500/10 blur-[120px]"
@@ -50,21 +51,21 @@ export default function LandingPage() {
 
       {/* ── İÇERİK KAPSAYICI ── */}
       <div className="relative z-10 w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 space-y-32 pb-32">
-        
+
         {/* =========================================
             BÖLÜM 1: HERO BENTO GRID
         ========================================= */}
         <div className="min-h-[calc(100vh-64px)] pt-16 lg:pt-8 flex flex-col justify-center">
           <div className="grid grid-cols-1 md:grid-cols-12 md:grid-rows-3 gap-4 lg:gap-6 min-h-[700px]">
-            
+
             {/* 1. ANA HERO */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
               style={{ transform: `perspective(1000px) rotateY(${mousePosition.x * 0.05}deg) rotateX(${-mousePosition.y * 0.05}deg)` }}
               className="md:col-span-7 md:row-span-2 relative group rounded-[2rem] bg-gradient-to-br from-slate-900/90 to-slate-950/90 backdrop-blur-xl border border-slate-800/60 p-8 lg:p-12 overflow-hidden flex flex-col justify-center transition-colors"
             >
               <div className="absolute -inset-px bg-gradient-to-r from-blue-500/20 to-sky-400/20 rounded-[2rem] opacity-0 group-hover:opacity-100 transition-opacity duration-700 blur-xl"></div>
-              
+
               <div className="relative z-10">
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold tracking-wide mb-6 md:mb-8">
                   <span className="relative flex h-2 w-2">
@@ -75,12 +76,12 @@ export default function LandingPage() {
                 </div>
 
                 <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.1] mb-6">
-                  Elektrikli araç rotanızı <br className="hidden lg:block"/>
+                  Elektrikli araç rotanızı <br className="hidden lg:block" />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
                     yapay zeka yönetsin.
                   </span>
                 </h1>
-                
+
                 <p className="text-slate-400 text-base lg:text-lg max-w-xl mb-10 leading-relaxed font-light">
                   ŞarjRota; topografya, hava durumu ve araç batarya profilinizi analiz ederek durmanız gereken ideal noktaları ve maliyeti saniyeler içinde hesaplar.
                 </p>
@@ -95,33 +96,33 @@ export default function LandingPage() {
                       <ChevronRight className="w-5 h-5 group-hover/btn:translate-x-0.5 transition-transform" />
                     </div>
                   </Link>
-                  
+
                   <div className="flex items-center gap-3 w-full sm:w-auto justify-center">
-                    <a 
-                      href="https://play.google.com/store/apps/details?id=tr.com.sarjrota" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+                    <a
+                      href="https://play.google.com/store/apps/details?id=tr.com.sarjrota"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/50 text-white rounded-2xl transition-all hover:scale-105 shadow-lg backdrop-blur-sm"
                       title="Google Play'den Alın"
                     >
                       <svg className="w-6 h-6" viewBox="0 0 512 512" fill="currentColor">
-                        <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.4c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+                        <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.4c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z" />
                       </svg>
                       <div className="flex flex-col items-start leading-none">
                         <span className="text-[9px] text-slate-300 font-medium">Google Play'den</span>
                         <span className="text-xs font-bold">Alın</span>
                       </div>
                     </a>
-                    
-                    <a 
-                      href="https://apps.apple.com/tr/app/%C5%9Farjrota-ev-rota-planlay%C4%B1c%C4%B1/id6771183754" 
-                      target="_blank" 
-                      rel="noopener noreferrer" 
+
+                    <a
+                      href="https://apps.apple.com/tr/app/%C5%9Farjrota-ev-rota-planlay%C4%B1c%C4%B1/id6771183754"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 px-4 py-3 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/50 text-white rounded-2xl transition-all hover:scale-105 shadow-lg backdrop-blur-sm"
                       title="App Store'dan İndirin"
                     >
                       <svg className="w-6 h-6" viewBox="0 0 384 512" fill="currentColor">
-                        <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+                        <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
                       </svg>
                       <div className="flex flex-col items-start leading-none">
                         <span className="text-[9px] text-slate-300 font-medium">App Store'dan</span>
@@ -134,7 +135,7 @@ export default function LandingPage() {
             </motion.div>
 
             {/* 2. HARİTA SİMÜLASYONU */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
               className="md:col-span-5 md:row-span-2 relative rounded-[2rem] bg-slate-900/50 backdrop-blur-xl border border-slate-800/50 overflow-hidden flex items-center justify-center group min-h-[300px]"
             >
@@ -143,10 +144,10 @@ export default function LandingPage() {
                 <div className="absolute top-1/4 left-1/4 w-32 h-32 bg-emerald-500/10 rounded-full blur-2xl"></div>
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-slate-950/80"></div>
-              
+
               <svg className="absolute inset-0 w-full h-full z-0 opacity-50 pointer-events-none" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <motion.path 
-                  d="M 10 80 Q 30 20 50 50 T 90 20" 
+                <motion.path
+                  d="M 10 80 Q 30 20 50 50 T 90 20"
                   fill="none" stroke="url(#gradient)" strokeWidth="0.8" strokeDasharray="4 2"
                   initial={{ pathLength: 0 }} animate={{ pathLength: 1 }}
                   transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
@@ -158,7 +159,7 @@ export default function LandingPage() {
                 </defs>
               </svg>
 
-              <motion.div 
+              <motion.div
                 animate={{ y: [-5, 5, -5] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                 className="relative z-20 bg-slate-950/80 backdrop-blur-xl border border-slate-700/50 p-6 rounded-2xl shadow-2xl w-3/4 max-w-sm"
               >
@@ -189,7 +190,7 @@ export default function LandingPage() {
             </motion.div>
 
             {/* 3. MALIYET KUTUSU */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.3 }}
               className="md:col-span-3 md:row-span-1 rounded-[2rem] bg-gradient-to-br from-emerald-900/20 to-emerald-950/40 backdrop-blur-xl border border-emerald-800/30 p-6 flex flex-col justify-between relative group overflow-hidden"
             >
@@ -202,7 +203,7 @@ export default function LandingPage() {
             </motion.div>
 
             {/* 4. DOĞRULUK KUTUSU */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.4 }}
               className="md:col-span-3 md:row-span-1 rounded-[2rem] bg-slate-900/60 backdrop-blur-xl border border-slate-800/60 p-6 flex flex-col justify-between"
             >
@@ -214,7 +215,7 @@ export default function LandingPage() {
             </motion.div>
 
             {/* 5. AĞLAR (MARQUEE) */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.5 }}
               className="md:col-span-6 md:row-span-1 rounded-[2rem] bg-slate-900/40 backdrop-blur-xl border border-slate-800/40 p-6 flex flex-col justify-center overflow-hidden relative"
             >
@@ -222,7 +223,7 @@ export default function LandingPage() {
               <div className="flex w-[200%] animate-marquee whitespace-nowrap opacity-60 hover:opacity-100 transition-opacity">
                 {[1, 2].map((i) => (
                   <div key={i} className="flex gap-12 px-6 items-center">
-                    {['ZES', 'EŞARJ', 'TRUGO', 'ASTOR', 'TESLA'].map(brand => <span key={brand} className="text-2xl font-black text-white tracking-widest">{brand}</span>)}
+                    {['ZES', 'EŞARJ', 'TRUGO', 'ASTOR', 'TESLA', 'OVOLT', 'SHARZ.NET'].map(brand => <span key={brand} className="text-2xl font-black text-white tracking-widest">{brand}</span>)}
                   </div>
                 ))}
               </div>
@@ -236,7 +237,7 @@ export default function LandingPage() {
             BÖLÜM 2: ÖRNEK ROTALAR (Bento Cards)
         ========================================= */}
         <section className="pt-16">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }}
             className="text-center mb-16"
           >
@@ -246,7 +247,7 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Örnek 1: Togg */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}
               className="bg-slate-900/40 backdrop-blur-md border border-slate-800/60 rounded-[2rem] p-8 hover:bg-slate-900/60 transition-colors group"
             >
@@ -291,7 +292,7 @@ export default function LandingPage() {
             </motion.div>
 
             {/* Örnek 2: Tesla */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.2 }}
               className="bg-slate-900/40 backdrop-blur-md border border-slate-800/60 rounded-[2rem] p-8 hover:bg-slate-900/60 transition-colors group"
             >
@@ -337,6 +338,11 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* ── REKLAM ALANI 1 ── */}
+        <div className="pt-16 flex justify-center">
+          <AdBanner variant="horizontal" />
+        </div>
+
         {/* =========================================
             BÖLÜM 3: NASIL ÇALIŞIR & ALTYAPI
         ========================================= */}
@@ -347,19 +353,19 @@ export default function LandingPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <FeatureCard 
+            <FeatureCard
               icon={<Compass className="w-8 h-8 text-blue-400" />}
               title="Topografya Analizi"
               desc="Yokuş çıkarken artan tüketim ve inerken kazanılan (rejeneratif) enerji harfi harfine hesaplanır."
               delay={0.1}
             />
-            <FeatureCard 
+            <FeatureCard
               icon={<ShieldCheck className="w-8 h-8 text-emerald-400" />}
               title="Ağ Filtreleme"
               desc="Kartınızın veya aboneliğinizin olduğu şarj ağlarını (Örn: ZES, Trugo) önceliklendirebilirsiniz."
               delay={0.2}
             />
-            <FeatureCard 
+            <FeatureCard
               icon={<CloudLightning className="w-8 h-8 text-amber-400" />}
               title="Hızlı Şarj Mantığı"
               desc="Batarya doldukça yavaşlayan şarj eğrisi hesaba katılarak en kısa sürede optimum şarj planı çizilir."
@@ -368,6 +374,11 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* ── REKLAM ALANI 2 ── */}
+        <div className="pt-16 flex justify-center">
+          <AdBanner variant="inline" />
+        </div>
+
         {/* =========================================
             BÖLÜM 4: SIKÇA SORULAN SORULAR
         ========================================= */}
@@ -375,17 +386,17 @@ export default function LandingPage() {
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-5xl font-bold text-white tracking-tight mb-4">Aklınıza Takılanlar</h2>
           </div>
-          
+
           <div className="space-y-4">
-            <FaqCard 
+            <FaqCard
               q="Sistem tamamen ücretsiz mi?"
               a="Evet, ŞarjRota'nın harita, filtreleme ve gelişmiş yapay zeka destekli rota planlama modüllerinin tamamı açık ve ücretsizdir."
             />
-            <FaqCard 
+            <FaqCard
               q="Aracımı listede bulamazsam ne yapmalıyım?"
               a="Veritabanımız sürekli güncellenmektedir. Aracınız yoksa, batarya kapasitesi (kWh) ve tüketimi sizinkine en yakın olan aracı seçerek çok yaklaşık sonuçlar elde edebilirsiniz."
             />
-            <FaqCard 
+            <FaqCard
               q="Tahmini maliyet nasıl hesaplanıyor?"
               a="Hesaplamalar, şarj ağlarının güncel ortalama AC ve DC kilovat-saat (kWh) birim fiyatları üzerinden yaklaşık olarak yapılmaktadır."
             />
@@ -396,7 +407,7 @@ export default function LandingPage() {
             BÖLÜM 5: FINAL CTA BENTO
         ========================================= */}
         <section className="pt-16">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, scale: 0.95 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }}
             className="w-full bg-gradient-to-br from-blue-600 to-sky-500 rounded-[3rem] p-12 md:p-24 text-center relative overflow-hidden"
           >
@@ -404,7 +415,7 @@ export default function LandingPage() {
             <div className="relative z-10">
               <h2 className="text-4xl md:text-6xl font-extrabold text-white mb-6 tracking-tight">Yolculuğa Başla.</h2>
               <p className="text-blue-100 text-lg md:text-xl mb-12 max-w-2xl mx-auto">
-                Hesap makinesini ve birden fazla şarj uygulamasını bir kenara bırakın. 
+                Hesap makinesini ve birden fazla şarj uygulamasını bir kenara bırakın.
                 Rotanızı girin, arkanıza yaslanın.
               </p>
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 mt-8">
@@ -414,33 +425,33 @@ export default function LandingPage() {
                 >
                   Hemen Rota Oluştur
                 </Link>
-                
+
                 <div className="flex items-center gap-3 w-full sm:w-auto justify-center">
-                  <a 
-                    href="https://play.google.com/store/apps/details?id=tr.com.sarjrota" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+                  <a
+                    href="https://play.google.com/store/apps/details?id=tr.com.sarjrota"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 px-5 py-4 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/50 text-white rounded-2xl transition-all hover:scale-105 shadow-lg backdrop-blur-sm"
                     title="Google Play'den Alın"
                   >
                     <svg className="w-7 h-7" viewBox="0 0 512 512" fill="currentColor">
-                      <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.4c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z"/>
+                      <path d="M325.3 234.3L104.6 13l280.8 161.2-60.1 60.1zM47 0C34 6.8 25.3 19.2 25.3 35.3v441.4c0 16.1 8.7 28.5 21.7 35.3l256.6-256L47 0zm425.2 225.6l-58.9-34.1-65.7 64.5 65.7 64.5 60.1-34.1c18-14.3 18-46.5-1.2-60.8zM104.6 499l280.8-161.2-60.1-60.1L104.6 499z" />
                     </svg>
                     <div className="flex flex-col items-start leading-none text-left">
                       <span className="text-[10px] text-slate-300 font-medium">Google Play'den</span>
                       <span className="text-sm font-bold">Alın</span>
                     </div>
                   </a>
-                  
-                  <a 
-                    href="https://apps.apple.com/tr/app/%C5%9Farjrota-ev-rota-planlay%C4%B1c%C4%B1/id6771183754" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+
+                  <a
+                    href="https://apps.apple.com/tr/app/%C5%9Farjrota-ev-rota-planlay%C4%B1c%C4%B1/id6771183754"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 px-5 py-4 bg-slate-900/80 hover:bg-slate-800 border border-slate-700/50 text-white rounded-2xl transition-all hover:scale-105 shadow-lg backdrop-blur-sm"
                     title="App Store'dan İndirin"
                   >
                     <svg className="w-7 h-7" viewBox="0 0 384 512" fill="currentColor">
-                      <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z"/>
+                      <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
                     </svg>
                     <div className="flex flex-col items-start leading-none text-left">
                       <span className="text-[10px] text-slate-300 font-medium">App Store'dan</span>
@@ -467,7 +478,7 @@ export default function LandingPage() {
 
 function FeatureCard({ icon, title, desc, delay }: { icon: React.ReactNode, title: string, desc: string, delay: number }) {
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay }}
       className="bg-slate-900/40 backdrop-blur-md border border-slate-800/60 rounded-[2rem] p-8 hover:bg-slate-900/60 transition-colors"
     >
@@ -482,7 +493,7 @@ function FeatureCard({ icon, title, desc, delay }: { icon: React.ReactNode, titl
 
 function FaqCard({ q, a }: { q: string, a: string }) {
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
       className="bg-slate-900/30 backdrop-blur-md border border-slate-800/50 rounded-2xl p-6 hover:bg-slate-900/50 transition-colors"
     >

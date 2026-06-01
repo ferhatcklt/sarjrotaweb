@@ -4,6 +4,7 @@ import { ChevronLeft, Clock, Calendar, Share2 } from 'lucide-react';
 import { Footer } from '../components/Footer';
 import { SEO } from '../components/SEO';
 import { getBlogPost } from '../data/blogPosts';
+import AdBanner from '../components/AdBanner';
 import blogContentMap from './blog/index';
 import BlogSidebar from './blog/components/BlogSidebar';
 
@@ -150,6 +151,11 @@ export default function BlogArticlePage() {
           </div>
 
         </div>
+      </div>
+
+      {/* ── REKLAM ALANI ── */}
+      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex justify-center">
+        <AdBanner variant="horizontal" />
       </div>
 
       <div className="mt-auto border-t border-gray-200 dark:border-slate-800/50 bg-white dark:bg-[#02040a]">

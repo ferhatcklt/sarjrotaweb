@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Zap, Info } from 'lucide-react';
 import { Footer } from '../components/Footer';
 import { SEO } from '../components/SEO';
+import AdBanner from '../components/AdBanner';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
@@ -145,6 +146,11 @@ export default function PricesPage() {
         )}
       </div>
       
+      {/* ── REKLAM ALANI ── */}
+      <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-8 flex justify-center">
+        <AdBanner variant="horizontal" />
+      </div>
+
       {/* SEO Content Section */}
       <div className="max-w-5xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-12 mb-8">
         <div className="bg-white dark:bg-slate-900/40 rounded-3xl p-8 sm:p-12 border border-gray-100 dark:border-slate-800/60 shadow-sm prose prose-slate dark:prose-invert max-w-none">

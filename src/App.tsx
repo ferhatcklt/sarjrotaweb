@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import LandingPage from './pages/LandingPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -12,6 +12,7 @@ import BlogArticlePage from './pages/BlogArticlePage';
 import DownloadPage from './pages/DownloadPage';
 import NotFoundPage from './pages/NotFoundPage';
 import RehberRedirect from './pages/RehberRedirect';
+import YeniliklerPage from './pages/YeniliklerPage';
 import { useAppStore } from './store/useAppStore';
 import { Navbar } from './components/Navbar';
 import CookieConsent from './components/CookieConsent';
@@ -28,6 +29,12 @@ const MapPageLoader = () => (
   </div>
 );
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
 function App() {
   const { theme } = useAppStore();
 
@@ -42,21 +49,23 @@ function App() {
   return (
     <HelmetProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <div className="flex flex-col min-h-screen">
           <Navbar />
           <main className="flex-1 pt-16 flex flex-col">
             <Routes>
               <Route path="/" element={<LandingPage />} />
-              <Route 
-                path="/harita" 
+              <Route
+                path="/harita"
                 element={
                   <Suspense fallback={<MapPageLoader />}>
                     <MapPage />
                   </Suspense>
-                } 
+                }
               />
               <Route path="/tarifeler" element={<PricesPage />} />
               <Route path="/araclar" element={<VehiclesPage />} />
+              <Route path="/yenilikler" element={<YeniliklerPage />} />
               <Route path="/hakkimizda" element={<AboutPage />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/blog/:slug" element={<BlogArticlePage />} />
