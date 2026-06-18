@@ -31,7 +31,7 @@ export default function GuideArticlePage() {
           </h1>
           
           <img 
-            src="/blog/sarj-istasyonu-isgal-cezasi.jpg" 
+            src="/blog-images/sarj-istasyonu-isgal-cezasi.jpg" 
             alt="Elektrikli Araç Şarj İstasyonu İşgal Cezası" 
             className="w-full h-[400px] object-cover rounded-3xl shadow-md mb-12"
           />

@@ -23,7 +23,7 @@ export const BLOG_POSTS: BlogPost[] = [
     date: '24 Mayıs 2024',
     readTime: '3 dk',
     category: 'Mevzuat & Ücretler',
-    image: '/blog/sarj-istasyonu-isgal-cezasi.jpg',
+    image: '/blog-images/sarj-istasyonu-isgal-cezasi.jpg',
     seoTitle: 'Şarj İstasyonu İşgal Cezası ve Ücretleri (2024) | ŞarjRota Blog',
     seoDescription: 'Elektrikli aracınızı şarj ettikten sonra istasyonu terk etmezseniz ne olur? Eşarj, ZES, Trugo gibi firmaların 2024 işgal ücretleri ve cezalarını öğrenin.',
   },
