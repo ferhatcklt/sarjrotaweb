@@ -9,14 +9,8 @@ import L from 'leaflet';
 import { useAppStore } from '../store/useAppStore';
 import { X, Menu } from 'lucide-react';
 
-// Marka bazlı şarj tarifeleri (TL/kWh) — API ile senkron
-const CHARGE_PRICES: Record<string, number> = {
-  ZES: 16.49, 'Eşarj': 13.50, Trugo: 14.98,
-  Tesla: 12.30, Voltrun: 14.00, 'Sharz.net': 10.99, Astor: 14.00, Ovolt: 13.99
-};
+// API'den gelen dinamik şarj tarifeleri (useAppStore üzerinden alınacak)
 const DEFAULT_PRICE = 14.00;
-const getPrice = (brand?: string) =>
-  brand && CHARGE_PRICES[brand] ? CHARGE_PRICES[brand] : DEFAULT_PRICE;
 
 // Leaflet default icon fix
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -142,7 +136,15 @@ export const MapView = () => {
     routeSummary,
     selectingMode,
     setSelectingMode,
+    prices,
   } = useAppStore();
+
+  const getPrice = (brand?: string) => {
+    if (!brand || !prices) return DEFAULT_PRICE;
+    const brandKey = Object.keys(prices).find(k => k.toLowerCase() === brand.toLowerCase());
+    if (brandKey) return prices[brandKey].dc; // Genelde DC fiyatı gösterilir
+    return DEFAULT_PRICE;
+  };
 
   const defaultCenter: [number, number] = [39.0, 35.0];
   const activePositions = route.map(p => [p.lat, p.lng] as [number, number]);

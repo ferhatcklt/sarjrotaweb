@@ -60,11 +60,13 @@ interface AppState {
   endLocation: Location | null;
   selectedVehicle: Vehicle | null;
   selectedStationBrands: string[];
+  initialChargePercentage: number;
 
   // Sistem Önbelleği (Caching)
   allVehicles: Vehicle[] | null;
   allBrands: string[] | null;
   allStations: Station[] | null;
+  prices: Record<string, any>;
 
   // Rota verisi
   route: Location[];
@@ -90,16 +92,19 @@ interface AppState {
   setEndLocation: (loc: Location | null) => void;
   setSelectedVehicle: (vehicle: Vehicle | null) => void;
   toggleStationBrand: (brand: string) => void;
+  setInitialChargePercentage: (val: number) => void;
   
   // Önbellek setters
   setAllVehicles: (vehicles: Vehicle[]) => void;
   setAllBrands: (brands: string[]) => void;
   setAllStations: (stations: Station[]) => void;
+  setPrices: (prices: Record<string, any>) => void;
   setRouteData: (route: Location[], stops: Station[], summary: RouteSummary, alternatives?: RouteAlternative[], nearbyStations?: Station[]) => void;
   selectAlternative: (index: number) => void;
   setSelectingMode: (mode: 'start' | 'end' | null) => void;
   toggleMobileSidebar: () => void;
   closeMobileSidebar: () => void;
+  resetRoute: () => void;
 }
 
 export const useAppStore = create<AppState>()(
@@ -109,10 +114,12 @@ export const useAppStore = create<AppState>()(
       endLocation: null,
       selectedVehicle: null,
       selectedStationBrands: [],
+      initialChargePercentage: 100,
       
       allVehicles: null,
       allBrands: null,
       allStations: null,
+      prices: {},
       route: [],
       stops: [],
       nearbyStations: [],
@@ -137,6 +144,7 @@ export const useAppStore = create<AppState>()(
       setEndLocation: (loc) => set({ endLocation: loc }),
       setSelectedVehicle: (vehicle) => set({ selectedVehicle: vehicle }),
       setSelectingMode: (mode) => set({ selectingMode: mode }),
+      setInitialChargePercentage: (val) => set({ initialChargePercentage: val }),
 
       toggleStationBrand: (brand) => set((state) => ({
         selectedStationBrands: state.selectedStationBrands.includes(brand)
@@ -147,6 +155,7 @@ export const useAppStore = create<AppState>()(
       setAllVehicles: (vehicles) => set({ allVehicles: vehicles }),
       setAllBrands: (brands) => set({ allBrands: brands }),
       setAllStations: (stations) => set({ allStations: stations }),
+      setPrices: (prices) => set({ prices }),
 
       setRouteData: (route, stops, summary, alternatives = [], nearbyStations = []) =>
         set({ route, stops, routeSummary: summary, alternatives, selectedAlternativeIndex: 0, nearbyStations }),
@@ -174,6 +183,17 @@ export const useAppStore = create<AppState>()(
 
       toggleMobileSidebar: () => set((s) => ({ isMobileSidebarOpen: !s.isMobileSidebarOpen })),
       closeMobileSidebar: () => set({ isMobileSidebarOpen: false }),
+      resetRoute: () => set({
+        startLocation: null,
+        endLocation: null,
+        route: [],
+        stops: [],
+        nearbyStations: [],
+        routeSummary: null,
+        alternatives: [],
+        selectedAlternativeIndex: 0,
+        selectingMode: 'start'
+      }),
     }),
     {
       name: 'sarjrota-storage',
@@ -182,7 +202,8 @@ export const useAppStore = create<AppState>()(
         theme: state.theme,
         allVehicles: state.allVehicles,
         allBrands: state.allBrands,
-        allStations: state.allStations
+        allStations: state.allStations,
+        prices: state.prices
       }),
     }
   )

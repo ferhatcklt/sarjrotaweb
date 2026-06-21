@@ -52,4 +52,71 @@
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
+  
+  <!-- Marka Blog Sayfaları -->
+  <url>
+    <loc>https://www.sarjrota.com.tr/blog/zes-sarj-istasyonlari</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sarjrota.com.tr/blog/esarj-sarj-istasyonlari</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sarjrota.com.tr/blog/trugo-sarj-istasyonlari</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sarjrota.com.tr/blog/tesla-sarj-istasyonlari</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sarjrota.com.tr/blog/voltrun-sarj-istasyonlari</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sarjrota.com.tr/blog/sharznet-sarj-istasyonlari</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sarjrota.com.tr/blog/astor-sarj-istasyonlari</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sarjrota.com.tr/blog/ovolt-sarj-istasyonlari</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sarjrota.com.tr/blog/neva-sarj-istasyonlari</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sarjrota.com.tr/blog/wat-mobilite-sarj-istasyonlari</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sarjrota.com.tr/blog/en-yakit-sarj-istasyonlari</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sarjrota.com.tr/blog/aksa-sarj-sarj-istasyonlari</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.sarjrota.com.tr/blog/rst-chargepoint-sarj-istasyonlari</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
 </urlset>

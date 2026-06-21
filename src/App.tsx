@@ -1,5 +1,5 @@
 import { Suspense, lazy, useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import LandingPage from './pages/LandingPage';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -10,12 +10,16 @@ import AboutPage from './pages/AboutPage';
 import BlogPage from './pages/BlogPage';
 import BlogArticlePage from './pages/BlogArticlePage';
 import DownloadPage from './pages/DownloadPage';
+import { BrandDetailPage } from './pages/BrandDetailPage';
 import NotFoundPage from './pages/NotFoundPage';
 import RehberRedirect from './pages/RehberRedirect';
 import YeniliklerPage from './pages/YeniliklerPage';
 import { useAppStore } from './store/useAppStore';
 import { Navbar } from './components/Navbar';
 import CookieConsent from './components/CookieConsent';
+
+const API_BASE = import.meta.env.VITE_API_BASE_URL;
+const API_KEY = import.meta.env.VITE_API_KEY;
 
 // Harita sayfasını sadece ziyaret edildiğinde yükle (Lazy Loading)
 // Bu sayede Leaflet ve react-leaflet anasayfa bundle'ına dahil olmaz.
@@ -35,8 +39,13 @@ function ScrollToTop() {
   return null;
 }
 
+const BrandRedirect = () => {
+  const { brandSlug } = useParams<{ brandSlug: string }>();
+  return <Navigate to={`/blog/${brandSlug}-sarj-istasyonlari`} replace />;
+};
+
 function App() {
-  const { theme } = useAppStore();
+  const { theme, setPrices } = useAppStore();
 
   useEffect(() => {
     if (theme === 'dark') {
@@ -45,6 +54,16 @@ function App() {
       document.documentElement.classList.remove('dark');
     }
   }, [theme]);
+
+  useEffect(() => {
+    // Fetch prices globally on startup
+    fetch(`${API_BASE}/api/stations/prices`, { headers: { 'X-Api-Key': API_KEY } })
+      .then(res => res.json())
+      .then(data => {
+        if (data) setPrices(data);
+      })
+      .catch(err => console.error('Fiyatlar yüklenemedi:', err));
+  }, []);
 
   return (
     <HelmetProvider>
@@ -67,6 +86,7 @@ function App() {
               <Route path="/araclar" element={<VehiclesPage />} />
               <Route path="/yenilikler" element={<YeniliklerPage />} />
               <Route path="/hakkimizda" element={<AboutPage />} />
+              <Route path="/blog/marka/:brandSlug" element={<BrandRedirect />} />
               <Route path="/blog" element={<BlogPage />} />
               <Route path="/blog/:slug" element={<BlogArticlePage />} />
               {/* Eski /rehber URL'lerini /blog'a yönlendir (SEO 301 redirect) */}

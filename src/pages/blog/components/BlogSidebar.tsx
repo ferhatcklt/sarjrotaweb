@@ -9,6 +9,7 @@ const API_KEY = import.meta.env.VITE_API_KEY;
 
 // Sistemin ana kategorileri (Hiç yazı olmasa da listede görünmesi için)
 const BASE_CATEGORIES = [
+  'Şarj Ağları',
   'Mevzuat & Ücretler',
   'Elektrikli Araç Teknolojileri',
   'Şarj İpuçları',
@@ -79,12 +80,21 @@ export default function BlogSidebar() {
       }
     });
 
+    // Dinamik olarak oluşturulan Marka blog sayfalarını "Şarj Ağları" kategorisine ekle
+    if (allBrands && allBrands.length > 0) {
+      if (counts['Şarj Ağları'] !== undefined) {
+        counts['Şarj Ağları'] += allBrands.length;
+      } else {
+        counts['Şarj Ağları'] = allBrands.length;
+      }
+    }
+
     // Object'i diziye çevir
     return Object.entries(counts).map(([name, count]) => ({
       name,
       count
     }));
-  }, []);
+  }, [allBrands]);
 
   return (
     <aside className="space-y-8">

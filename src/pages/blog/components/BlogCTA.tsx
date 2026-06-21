@@ -3,7 +3,7 @@ import { Navigation } from 'lucide-react';
 
 export default function BlogCTA() {
   return (
-    <div className="my-10 relative overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-blue-100 dark:border-slate-700 p-5 md:p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
+    <div className="not-prose my-10 relative overflow-hidden rounded-2xl bg-slate-50 dark:bg-slate-800/50 border border-blue-100 dark:border-slate-700 p-5 md:p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm">
       <div className="absolute top-0 left-0 w-2 h-full bg-blue-500"></div>
       
       <div className="flex-1 text-center md:text-left pl-2">

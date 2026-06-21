@@ -4,14 +4,45 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { Footer } from '../components/Footer';
 import { SEO } from '../components/SEO';
 import { BLOG_POSTS } from '../data/blogPosts';
+import { useAppStore } from '../store/useAppStore';
 
 export default function BlogPage() {
   const [searchParams] = useSearchParams();
   const activeCategory = searchParams.get('kategori');
+  const { allBrands } = useAppStore();
+  
+  const brandPosts = (allBrands || []).map((brand, index) => {
+    const slugStr = brand.toString().toLowerCase()
+      .replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ı/g, 'i')
+      .replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/ü/g, 'u')
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]+/g, '')
+      .replace(/--+/g, '-')
+      .replace(/^-+/, '')
+      .replace(/-+$/, '');
+
+    // Her markaya 1 gün arayla tarih ver (en yeni en üstte)
+    const baseDate = new Date(2026, 5, 20); // 20 Haziran 2026
+    const postDate = new Date(baseDate);
+    postDate.setDate(baseDate.getDate() - index);
+    const formattedDate = postDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    return {
+      slug: `${slugStr}-sarj-istasyonlari`,
+      title: `${brand} Şarj İstasyonları, Fiyatları ve 2026 Rehberi`,
+      excerpt: `${brand} elektrikli araç şarj ağı hakkında güncel istasyon sayıları, AC/DC kWh şarj ücretleri ve ödeme sistemleri hakkında detaylı rehber.`,
+      category: 'Şarj Ağları',
+      readTime: '3 dk',
+      date: formattedDate,
+      image: `/blog-images/${slugStr}-sarj-istasyonlari.jpg`
+    };
+  });
+
+  const allPosts = [...brandPosts, ...BLOG_POSTS];
   
   const filteredPosts = activeCategory 
-    ? BLOG_POSTS.filter(post => post.category === activeCategory)
-    : BLOG_POSTS;
+    ? allPosts.filter(post => post.category === activeCategory)
+    : allPosts;
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#030712] font-['Inter'] transition-colors flex flex-col">
       <SEO 
@@ -87,7 +118,7 @@ export default function BlogPage() {
                 transition={{ delay: i * 0.1 }}
                 className="bg-white dark:bg-slate-900/60 border border-gray-200 dark:border-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all group flex flex-col"
               >
-                <div className="h-48 overflow-hidden relative">
+                <Link to={`/blog/${post.slug}`} className="h-48 overflow-hidden relative block">
                   <img 
                     src={post.image} 
                     alt={post.title}
@@ -97,15 +128,17 @@ export default function BlogPage() {
                   <div className="absolute top-4 left-4 bg-blue-600 text-white text-xs font-bold px-3 py-1 rounded-full">
                     {post.category}
                   </div>
-                </div>
+                </Link>
                 <div className="p-6 flex flex-col flex-1">
                   <div className="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400 mb-4">
                     <span className="flex items-center gap-1"><BookOpen size={14} /> {post.date}</span>
                     <span className="flex items-center gap-1"><Clock size={14} /> {post.readTime}</span>
                   </div>
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
-                    {post.title}
-                  </h3>
+                  <Link to={`/blog/${post.slug}`}>
+                    <h3 className="text-xl font-bold text-slate-900 dark:text-white mb-3 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                      {post.title}
+                    </h3>
+                  </Link>
                   <p className="text-slate-600 dark:text-slate-400 text-sm line-clamp-3 mb-6 flex-1">
                     {post.excerpt}
                   </p>

@@ -7,9 +7,16 @@ import { getBlogPost } from '../data/blogPosts';
 import AdBanner from '../components/AdBanner';
 import blogContentMap from './blog/index';
 import BlogSidebar from './blog/components/BlogSidebar';
+import { BrandDetailPage } from './BrandDetailPage';
 
 export default function BlogArticlePage() {
   const { slug } = useParams<{ slug: string }>();
+  
+  // Eğer slug marka şarj istasyonları formatındaysa, o sayfayı render et
+  if (slug?.endsWith('-sarj-istasyonlari')) {
+    return <BrandDetailPage />;
+  }
+
   const post = slug ? getBlogPost(slug) : undefined;
 
   // Yazı bulunamazsa 404'e yönlendir

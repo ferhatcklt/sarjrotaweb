@@ -100,6 +100,13 @@ export default function VehiclesPage() {
                     </span>
                     <span className="font-semibold text-slate-900 dark:text-slate-200">{vehicle.rangeKm} km</span>
                   </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="flex items-center gap-1.5 text-slate-600 dark:text-slate-400">
+                      <Zap size={16} className="text-blue-500" />
+                      Tüketim (WLTP)
+                    </span>
+                    <span className="font-semibold text-slate-900 dark:text-slate-200">{vehicle.averageConsumptionKWhPer100Km || '?'} kWh/100km</span>
+                  </div>
                   <div className="flex items-center justify-between text-sm pt-3 border-t border-gray-100 dark:border-slate-800">
                     <span className="text-slate-500 dark:text-slate-500">Gerçek Menzil</span>
                     <span className="font-bold text-blue-600 dark:text-blue-400">~{Math.round(vehicle.rangeKm * 0.9)} km</span>

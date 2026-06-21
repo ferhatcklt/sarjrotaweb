@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Zap, Info } from 'lucide-react';
 import { Footer } from '../components/Footer';
 import { SEO } from '../components/SEO';
@@ -8,19 +9,18 @@ import AdBanner from '../components/AdBanner';
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 const API_KEY = import.meta.env.VITE_API_KEY;
 
-const BRAND_PRICES: Record<string, { AC: number; DC: number; note?: string; dcNote?: string }> = {
-  'ZES': { AC: 9.99, DC: 16.49, dcNote: 'DC-1: 12.99 ₺ / DC-2: 16.49 ₺' },
-  'Eşarj': { AC: 9.90, DC: 13.50 },
-  'Trugo': { AC: 11.49, DC: 14.98 },
-  'Tesla': { AC: 12.30, DC: 12.30, note: 'Tesla araçlarına 9.90 ₺' },
-  'Voltrun': { AC: 10.00, DC: 14.00 },
-  'Sharz.net': { AC: 9.49, DC: 10.99 },
-  'Astor': { AC: 10.00, DC: 14.00 },
-  'Ovolt': { AC: 9.99, DC: 13.99 }
-};
+interface BrandPrice {
+  ac: number;
+  dc: number;
+  note?: string;
+  dcNote?: string;
+}
 
 interface StationBasic {
   brand: string;
+  acConnectorCount?: number;
+  dcConnectorCount?: number;
+  hpcConnectorCount?: number;
 }
 
 export default function PricesPage() {
@@ -28,22 +28,38 @@ export default function PricesPage() {
   const [loading, setLoading] = useState(true);
   const [chargeType, setChargeType] = useState<'DC' | 'AC'>('DC');
 
+  const [prices, setPrices] = useState<Record<string, BrandPrice>>({});
+
   useEffect(() => {
-    fetch(`${API_BASE}/api/stations`, { headers: { 'X-Api-Key': API_KEY } })
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) setStations(data);
-      })
-      .catch(err => console.error('İstasyonlar yüklenemedi:', err))
-      .finally(() => setLoading(false));
+    Promise.all([
+      fetch(`${API_BASE}/api/stations`, { headers: { 'X-Api-Key': API_KEY } }).then(r => r.json()),
+      fetch(`${API_BASE}/api/stations/prices`, { headers: { 'X-Api-Key': API_KEY } }).then(r => r.json())
+    ])
+    .then(([stationsData, pricesData]) => {
+      if (Array.isArray(stationsData)) setStations(stationsData);
+      if (pricesData) setPrices(pricesData);
+    })
+    .catch(err => console.error('Veriler yüklenemedi:', err))
+    .finally(() => setLoading(false));
   }, []);
 
   const groupedBrands = useMemo(() => {
     const brandMap = new Map();
     stations.forEach((s) => {
-      const prices = BRAND_PRICES[s.brand] || { AC: 14.00, DC: 14.00 };
-      const price = chargeType === 'AC' ? prices.AC : prices.DC;
-      const noteToShow = (chargeType === 'DC' && prices.dcNote) ? prices.dcNote : prices.note;
+      // Sadece seçili şarj tipine sahip istasyonları say
+      const hasAC = s.acConnectorCount && s.acConnectorCount > 0;
+      const hasDC = (s.dcConnectorCount && s.dcConnectorCount > 0) || (s.hpcConnectorCount && s.hpcConnectorCount > 0);
+      
+      if (chargeType === 'AC' && !hasAC) return;
+      if (chargeType === 'DC' && !hasDC) return;
+
+      // Fiyatları büyük/küçük harf duyarsız eşleştir, yoksa varsayılan döndür
+      // Case-insensitive eşleştirme yapıyoruz.
+      const brandKey = Object.keys(prices).find(k => k.toLowerCase() === s.brand.toLowerCase());
+      const p = brandKey ? prices[brandKey] : { ac: 14.00, dc: 14.00 };
+      
+      const price = chargeType === 'AC' ? p.ac : p.dc;
+      const noteToShow = (chargeType === 'DC' && p.dcNote) ? p.dcNote : p.note;
       
       if (!brandMap.has(s.brand)) {
         brandMap.set(s.brand, {
@@ -59,6 +75,17 @@ export default function PricesPage() {
     });
     return Array.from(brandMap.values()).sort((a, b) => b.count - a.count);
   }, [stations, chargeType]);
+
+  const slugify = (text: string) => {
+    return text.toString().toLowerCase()
+      .replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ı/g, 'i')
+      .replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/ü/g, 'u')
+      .replace(/\s+/g, '-')
+      .replace(/[^\w-]+/g, '')
+      .replace(/--+/g, '-')
+      .replace(/^-+/, '')
+      .replace(/-+$/, '');
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-[#030712] font-['Inter'] transition-colors flex flex-col">
@@ -109,13 +136,13 @@ export default function PricesPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {groupedBrands.map((brand, i) => (
-              <motion.div
-                key={brand.name}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.4, delay: i * 0.05 }}
-                className="bg-white dark:bg-slate-900/60 backdrop-blur-sm border border-gray-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between"
-              >
+              <Link to={`/blog/${slugify(brand.name)}-sarj-istasyonlari`} key={brand.name} className="block">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
+                  className="bg-white dark:bg-slate-900/60 backdrop-blur-sm border border-gray-200 dark:border-slate-800 rounded-2xl p-6 shadow-sm hover:shadow-md hover:border-emerald-500/50 transition-all flex flex-col justify-between h-full cursor-pointer"
+                >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-500/20 flex items-center justify-center text-blue-600 dark:text-blue-400">
@@ -141,8 +168,9 @@ export default function PricesPage() {
                   )}
                 </div>
               </motion.div>
-            ))}
-          </div>
+            </Link>
+          ))}
+        </div>
         )}
       </div>
       

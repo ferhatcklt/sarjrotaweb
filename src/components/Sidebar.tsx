@@ -35,6 +35,10 @@ export const Sidebar = () => {
     setSelectingMode,
     theme,
     toggleTheme,
+    resetRoute,
+    route,
+    initialChargePercentage,
+    setInitialChargePercentage,
   } = useAppStore();
 
   const [isLoading, setIsLoading]         = useState(false);
@@ -96,7 +100,8 @@ export const Sidebar = () => {
           end:   { lat: endLocation.lat,   lng: endLocation.lng   },
           vehicleId:      selectedVehicle.id,
           preferredBrands: selectedStationBrands,
-          connectorTypes,   // ← AC / DC / HPC filtresi
+          connectorTypes,
+          initialChargePercentage,
         }),
       });
 
@@ -154,7 +159,7 @@ export const Sidebar = () => {
     if (startLocation && endLocation && selectedVehicle && routeSummary) {
       handleCalculateRoute();
     }
-  }, [connectorTypes, selectedStationBrands]);
+  }, [connectorTypes, selectedStationBrands, initialChargePercentage]);
 
   // Yeni: Kullanıcı Haritadan veya Menüden Başlangıç/Varış/Araç seçtiğinde otomatik rota hesapla
   useEffect(() => {
@@ -195,9 +200,19 @@ export const Sidebar = () => {
 
         {/* ── Rota ── */}
         <section>
-          <h2 className="text-sm font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider mb-3 flex items-center gap-2">
-            <MapPin size={16} /> Rota
-          </h2>
+          <div className="flex items-center justify-between mb-3">
+            <h2 className="text-sm font-semibold text-gray-500 dark:text-slate-400 uppercase tracking-wider flex items-center gap-2">
+              <MapPin size={16} /> Rota
+            </h2>
+            {(startLocation || endLocation || route.length > 0) && (
+              <button
+                onClick={resetRoute}
+                className="text-xs font-medium text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 transition-colors"
+              >
+                Temizle
+              </button>
+            )}
+          </div>
           <div className="flex flex-col gap-3 relative">
             <div className="absolute left-[11px] top-4 bottom-4 w-0.5 bg-gray-200 dark:bg-slate-700" />
             {/* Başlangıç */}
@@ -306,6 +321,33 @@ export const Sidebar = () => {
               </label>
             ))}
           </div>
+
+          {/* Başlangıç Şarjı */}
+          {selectedVehicle && (
+            <div className="mt-4 p-3 bg-brand-50 dark:bg-brand-900/20 rounded-lg border border-brand-100 dark:border-brand-800/50">
+              <div className="flex justify-between items-center mb-2">
+                <label className="text-xs font-semibold text-gray-600 dark:text-slate-300">Yola Çıkış Şarjı</label>
+              </div>
+              <div className="flex gap-1">
+                {[20, 40, 60, 80, 100].map((val) => {
+                  const isActive = initialChargePercentage === val;
+                  return (
+                    <button
+                      key={val}
+                      onClick={() => setInitialChargePercentage(val)}
+                      className={`flex-1 py-1.5 rounded text-xs font-bold transition-all ${
+                        isActive
+                          ? 'bg-brand-500 text-white shadow-sm'
+                          : 'bg-white dark:bg-slate-800 text-gray-500 dark:text-slate-400 hover:bg-brand-100 dark:hover:bg-brand-900/40 border border-gray-200 dark:border-slate-700'
+                      }`}
+                    >
+                      %{val}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
         </section>
 
         <hr className="border-gray-100 dark:border-slate-800" />
@@ -401,63 +443,46 @@ export const Sidebar = () => {
 
         {/* Aktif rota özeti */}
         {routeSummary && (
-          <div className="bg-brand-50 dark:bg-brand-900/20 border border-brand-200 dark:border-brand-900/50 p-3 rounded-lg text-sm flex flex-col gap-2">
-            <h3 className="font-semibold text-brand-900 dark:text-brand-100 flex items-center gap-1">
+          <div className="bg-brand-50 dark:bg-brand-900/20 border border-brand-200 dark:border-brand-900/50 p-3 rounded-lg text-sm flex flex-col gap-2 relative overflow-hidden">
+            <h3 className="font-semibold text-brand-900 dark:text-brand-100 flex items-center gap-1.5 text-sm mb-1">
               <Info size={16} className="text-brand-600 dark:text-brand-400" /> Rota Özeti
             </h3>
-            <div className="grid grid-cols-2 gap-2 text-brand-800 dark:text-brand-200">
-              <div className="flex flex-col">
-                <span className="text-xs text-brand-600/80 dark:text-brand-400/80 uppercase">Mesafe</span>
-                <span className="font-medium">{routeSummary.totalDistanceKm} km</span>
+            
+            <div className="flex flex-col gap-1.5 text-[13px] text-gray-700 dark:text-slate-300">
+              <div className="flex justify-between items-center">
+                <span className="text-gray-500 dark:text-slate-400">Mesafe</span>
+                <span className="font-semibold text-gray-900 dark:text-white">{routeSummary.totalDistanceKm} km</span>
               </div>
-              <div className="flex flex-col">
-                <span className="text-xs text-brand-600/80 dark:text-brand-400/80 uppercase">Sürüş Süresi</span>
-                <span className="font-medium">{formatHours(routeSummary.estimatedDurationHours)}</span>
+              <div className="flex justify-between items-center">
+                <span className="text-gray-500 dark:text-slate-400">Sürüş Süresi</span>
+                <span className="font-semibold text-gray-900 dark:text-white">{formatHours(routeSummary.estimatedDurationHours)}</span>
               </div>
 
-              {routeSummary.chargeTimeHours > 0 && (
+              {routeSummary.chargeTimeHours > 0 ? (
                 <>
-                  <div className="flex flex-col col-span-2 border-t border-brand-200/50 dark:border-brand-800/50 pt-2 mt-0.5">
-                    <span className="text-xs text-amber-600/80 dark:text-amber-500/80 uppercase">Şarj Bekleme</span>
-                    <span className="font-medium text-amber-700 dark:text-amber-500">
-                      +{Math.round(routeSummary.chargeTimeHours * 60)} dk
-                      &nbsp;·&nbsp; {routeSummary.chargeStopsCount} durak
-                    </span>
+                  <div className="flex justify-between items-center text-amber-700 dark:text-amber-500">
+                    <span>Şarj Bekleme <span className="text-[11px] opacity-80">({routeSummary.chargeStopsCount} mola)</span></span>
+                    <span className="font-semibold">+{Math.round(routeSummary.chargeTimeHours * 60)} dk</span>
                   </div>
-                  <div className="flex flex-col col-span-2 bg-brand-100 dark:bg-brand-900/40 rounded-lg px-2 py-1.5">
-                    <span className="text-xs text-brand-600/80 dark:text-brand-400/80 uppercase">Toplam Seyahat</span>
-                    <span className="font-bold text-brand-900 dark:text-brand-100 text-base">{formatHours(routeSummary.totalJourneyHours)}</span>
-                    <span className="text-[10px] text-brand-600/70 dark:text-brand-400/70">Sürüş + Şarj süresi</span>
+                  <div className="flex justify-between items-center font-bold text-brand-700 dark:text-brand-400 border-t border-brand-100 dark:border-brand-800/50 pt-1.5 mt-0.5">
+                    <span>Toplam Seyahat</span>
+                    <span className="text-sm">{formatHours(routeSummary.totalJourneyHours)}</span>
                   </div>
                 </>
-              )}
-
-              {routeSummary.chargeTimeHours === 0 && (
-                <div className="col-span-2 flex flex-col border-t border-brand-200/50 dark:border-brand-800/50 pt-2 mt-1">
-                  <span className="text-xs text-brand-600/80 dark:text-brand-400/80 uppercase">Şarj Molası</span>
-                  <span className="font-medium">Bu rotada şarj gerekmez ✅</span>
+              ) : (
+                <div className="flex justify-between items-center text-emerald-600 dark:text-emerald-400 border-t border-brand-100 dark:border-brand-800/50 pt-1.5 mt-0.5">
+                  <span className="font-medium">Şarj İhtiyacı</span>
+                  <span className="font-semibold">Yok ✅</span>
                 </div>
               )}
 
-              {/* Varış Şarj Yüzdesi */}
               {routeSummary.arrivalChargePercentage !== undefined && (
-                <div className="col-span-2 flex flex-col border-t border-brand-200/50 dark:border-brand-800/50 pt-2 mt-1">
-                  <span className="text-xs text-brand-600/80 dark:text-brand-400/80 uppercase">Varış Şarjı</span>
+                <div className="flex justify-between items-center border-t border-brand-100 dark:border-brand-800/50 pt-1.5 mt-0.5">
+                  <span className="text-gray-500 dark:text-slate-400">Varış Şarjı</span>
                   <div className="flex items-center gap-2">
-                    <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
-                      <div 
-                        className={`h-full rounded-full transition-all ${
-                          routeSummary.arrivalChargePercentage > 30 ? 'bg-emerald-500' 
-                          : routeSummary.arrivalChargePercentage > 15 ? 'bg-amber-500' 
-                          : 'bg-red-500'
-                        }`}
-                        style={{ width: `${routeSummary.arrivalChargePercentage}%` }}
-                      />
-                    </div>
-                    <span className={`font-bold text-sm ${
-                      routeSummary.arrivalChargePercentage > 30 ? 'text-emerald-700 dark:text-emerald-400' 
-                      : routeSummary.arrivalChargePercentage > 15 ? 'text-amber-700 dark:text-amber-400' 
-                      : 'text-red-700 dark:text-red-400'
+                    <span className={`font-bold ${
+                      routeSummary.arrivalChargePercentage > 30 ? 'text-emerald-600 dark:text-emerald-400' :
+                      routeSummary.arrivalChargePercentage > 15 ? 'text-amber-600 dark:text-amber-400' : 'text-red-600 dark:text-red-400'
                     }`}>
                       %{routeSummary.arrivalChargePercentage}
                     </span>
@@ -465,18 +490,14 @@ export const Sidebar = () => {
                 </div>
               )}
 
-              {/* Tahmini Maliyet */}
               {routeSummary.estimatedCost !== undefined && routeSummary.estimatedCost > 0 && (
-                <div className="col-span-2 flex flex-col border-t border-brand-200/50 dark:border-brand-800/50 pt-2 mt-1">
-                  <span className="text-xs text-brand-600/80 dark:text-brand-400/80 uppercase">Tahmini Şarj Maliyeti</span>
-                  <span className="font-bold text-emerald-700 dark:text-emerald-400 text-base flex items-center gap-1">
+                <div className="flex justify-between items-center">
+                  <span className="text-gray-500 dark:text-slate-400">Tahmini Maliyet</span>
+                  <span className="font-bold text-emerald-600 dark:text-emerald-400">
                     ₺{routeSummary.estimatedCost.toLocaleString('tr-TR')}
-                    <span className="text-[10px] font-normal text-gray-500 dark:text-slate-400 mt-1">(Güncel tarife ortalaması)</span>
                   </span>
                 </div>
               )}
-
-
             </div>
           </div>
         )}
