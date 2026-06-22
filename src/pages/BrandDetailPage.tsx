@@ -9,6 +9,7 @@ import BlogSidebar from './blog/components/BlogSidebar';
 import BlogCTA from './blog/components/BlogCTA';
 import AdBanner from '../components/AdBanner';
 import { Footer } from '../components/Footer';
+import { useAppStore } from '../store/useAppStore';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
 
@@ -95,7 +96,20 @@ export const BrandDetailPage = () => {
             <span className="bg-blue-600 text-white px-3 py-1 rounded-full font-bold shadow-lg shadow-blue-900/30">
               Şarj Ağları
             </span>
-            <span className="flex items-center gap-1.5"><Calendar size={14} /> {new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+            <span className="flex items-center gap-1.5"><Calendar size={14} /> {(() => {
+              const { allBrands } = useAppStore.getState();
+              const brandIndex = (allBrands || []).findIndex(b => {
+                const slugStr = b.toString().toLowerCase()
+                  .replace(/ş/g, 's').replace(/ğ/g, 'g').replace(/ı/g, 'i')
+                  .replace(/ö/g, 'o').replace(/ç/g, 'c').replace(/ü/g, 'u')
+                  .replace(/\s+/g, '-').replace(/[^\w-]+/g, '')
+                  .replace(/--+/g, '-').replace(/^-+/, '').replace(/-+$/, '');
+                return slugStr === brandSlug;
+              });
+              const baseDate = new Date(2026, 5, 20); // 20 Haziran 2026
+              if (brandIndex >= 0) baseDate.setDate(baseDate.getDate() - brandIndex);
+              return baseDate.toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+            })()}</span>
             <span className="flex items-center gap-1.5"><Clock size={14} /> 3 dk okuma</span>
           </div>
           

@@ -19,13 +19,13 @@ export const BLOG_POSTS: BlogPost[] = [
   {
     slug: 'sarj-istasyonu-isgal-cezasi',
     title: 'Şarj İstasyonu İşgal Cezası ve Ücretleri Nelerdir?',
-    excerpt: 'Elektrikli aracınızı şarj ettikten sonra istasyonu terk etmezseniz ne olur? 2024 güncel işgal ücretleri ve cezaları hakkında bilmeniz gereken her şey.',
-    date: '24 Mayıs 2024',
+    excerpt: 'Elektrikli aracınızı şarj ettikten sonra istasyonu terk etmezseniz ne olur? 2026 güncel işgal ücretleri ve cezaları hakkında bilmeniz gereken her şey.',
+    date: '24 Mayıs 2026',
     readTime: '3 dk',
     category: 'Mevzuat & Ücretler',
     image: '/blog-images/sarj-istasyonu-isgal-cezasi.jpg',
-    seoTitle: 'Şarj İstasyonu İşgal Cezası ve Ücretleri (2024) | ŞarjRota Blog',
-    seoDescription: 'Elektrikli aracınızı şarj ettikten sonra istasyonu terk etmezseniz ne olur? Eşarj, ZES, Trugo gibi firmaların 2024 işgal ücretleri ve cezalarını öğrenin.',
+    seoTitle: 'Şarj İstasyonu İşgal Cezası ve Ücretleri (2026) | ŞarjRota Blog',
+    seoDescription: 'Elektrikli aracınızı şarj ettikten sonra istasyonu terk etmezseniz ne olur? Eşarj, ZES, Trugo gibi firmaların 2026 işgal ücretleri ve cezalarını öğrenin.',
   },
 ];
 
