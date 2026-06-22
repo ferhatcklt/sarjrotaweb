@@ -6,7 +6,6 @@ import { SEO } from '../components/SEO';
 import type { Vehicle } from '../store/useAppStore';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
 
 export default function VehiclesPage() {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
@@ -14,7 +13,7 @@ export default function VehiclesPage() {
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/vehicles`, { headers: { 'X-Api-Key': API_KEY } })
+    fetch(`${API_BASE}/api/vehicles`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data)) setVehicles(data);

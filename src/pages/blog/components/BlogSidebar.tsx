@@ -5,7 +5,6 @@ import { useAppStore } from '../../../store/useAppStore';
 import { BLOG_POSTS } from '../../../data/blogPosts';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
 
 // Sistemin ana kategorileri (Hiç yazı olmasa da listede görünmesi için)
 const BASE_CATEGORIES = [
@@ -25,19 +24,19 @@ export default function BlogSidebar() {
       try {
         let fetchCount = 0;
         if (!allVehicles) {
-          const res = await fetch(`${API_BASE}/api/vehicles`, { headers: { 'X-Api-Key': API_KEY } });
+          const res = await fetch(`${API_BASE}/api/vehicles`);
           const data = await res.json();
           setAllVehicles(data);
           fetchCount++;
         }
         if (!allBrands) {
-          const res = await fetch(`${API_BASE}/api/stations/brands`, { headers: { 'X-Api-Key': API_KEY } });
+          const res = await fetch(`${API_BASE}/api/stations/brands`);
           const data = await res.json();
           setAllBrands(data);
           fetchCount++;
         }
         if (!allStations) {
-          const res = await fetch(`${API_BASE}/api/stations`, { headers: { 'X-Api-Key': API_KEY } });
+          const res = await fetch(`${API_BASE}/api/stations`);
           const data = await res.json();
           setAllStations(data);
           fetchCount++;

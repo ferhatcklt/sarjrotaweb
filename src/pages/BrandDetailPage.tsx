@@ -11,7 +11,6 @@ import AdBanner from '../components/AdBanner';
 import { Footer } from '../components/Footer';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
 
 export const BrandDetailPage = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -24,9 +23,7 @@ export const BrandDetailPage = () => {
     const fetchStats = async () => {
       try {
         setLoading(true);
-        const res = await fetch(`${API_BASE}/api/Stations/brands/${brandSlug}/statistics`, {
-          headers: { 'X-Api-Key': API_KEY }
-        });
+        const res = await fetch(`${API_BASE}/api/Stations/brands/${brandSlug}/statistics`);
         if (!res.ok) {
           throw new Error('Marka bulunamadı');
         }

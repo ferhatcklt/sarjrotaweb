@@ -19,7 +19,6 @@ import { Navbar } from './components/Navbar';
 import CookieConsent from './components/CookieConsent';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
 
 // Harita sayfasını sadece ziyaret edildiğinde yükle (Lazy Loading)
 // Bu sayede Leaflet ve react-leaflet anasayfa bundle'ına dahil olmaz.
@@ -57,7 +56,7 @@ function App() {
 
   useEffect(() => {
     // Fetch prices globally on startup
-    fetch(`${API_BASE}/api/stations/prices`, { headers: { 'X-Api-Key': API_KEY } })
+    fetch(`${API_BASE}/api/stations/prices`)
       .then(res => res.json())
       .then(data => {
         if (data) setPrices(data);

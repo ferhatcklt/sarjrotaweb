@@ -7,7 +7,6 @@ import { SEO } from '../components/SEO';
 import AdBanner from '../components/AdBanner';
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
 
 interface BrandPrice {
   ac: number;
@@ -32,8 +31,8 @@ export default function PricesPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch(`${API_BASE}/api/stations`, { headers: { 'X-Api-Key': API_KEY } }).then(r => r.json()),
-      fetch(`${API_BASE}/api/stations/prices`, { headers: { 'X-Api-Key': API_KEY } }).then(r => r.json())
+      fetch(`${API_BASE}/api/stations`).then(r => r.json()),
+      fetch(`${API_BASE}/api/stations/prices`).then(r => r.json())
     ])
     .then(([stationsData, pricesData]) => {
       if (Array.isArray(stationsData)) setStations(stationsData);

@@ -15,7 +15,6 @@ const CONNECTOR_TYPES = [
 // (Silindi, çünkü kullanılmıyor)
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL;
-const API_KEY = import.meta.env.VITE_API_KEY;
 
 export const Sidebar = () => {
   const {
@@ -49,12 +48,12 @@ export const Sidebar = () => {
 
   // API'den araçları ve istasyon markalarını çek
   useEffect(() => {
-    fetch(`${API_BASE}/api/vehicles`, { headers: { 'X-Api-Key': API_KEY } })
+    fetch(`${API_BASE}/api/vehicles`)
       .then(r => r.json())
       .then(data => setVehicles(data))
       .catch(err => console.error('Araçlar yüklenemedi:', err));
 
-    fetch(`${API_BASE}/api/stations/brands`, { headers: { 'X-Api-Key': API_KEY } })
+    fetch(`${API_BASE}/api/stations/brands`)
       .then(r => r.json())
       .then(data => setStationBrands(data))
       .catch(err => console.error('Markalar yüklenemedi:', err));
@@ -93,7 +92,6 @@ export const Sidebar = () => {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
-          'X-Api-Key': API_KEY
         },
         body: JSON.stringify({
           start: { lat: startLocation.lat, lng: startLocation.lng },
