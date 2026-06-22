@@ -149,6 +149,12 @@ export const MapView = () => {
   const defaultCenter: [number, number] = [39.0, 35.0];
   const activePositions = route.map(p => [p.lat, p.lng] as [number, number]);
 
+  // Türkiye Sınırları (Güneybatı ve Kuzeydoğu köşeleri)
+  const TURKEY_BOUNDS: L.LatLngBoundsLiteral = [
+    [35.8, 25.6], // Güneybatı
+    [42.1, 44.8], // Kuzeydoğu
+  ];
+
   // Yakın istasyonlar arasından zorunlu durakları çıkar (çift pin önleme)
   const stopIds = new Set(stops.map(s => s.id?.toString()));
   const nearbyOnly = nearbyStations.filter(s => !stopIds.has(s.id?.toString()));
@@ -158,6 +164,9 @@ export const MapView = () => {
       <MapContainer
         center={defaultCenter}
         zoom={6}
+        minZoom={5}
+        maxBounds={TURKEY_BOUNDS}
+        maxBoundsViscosity={1.0}
         className="w-full h-full"
         zoomControl={false}
       >

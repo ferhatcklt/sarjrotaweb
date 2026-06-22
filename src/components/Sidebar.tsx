@@ -146,7 +146,7 @@ export const Sidebar = () => {
       closeMobileSidebar();
     } catch (error) {
       console.error('Rota hesaplanırken hata:', error);
-      alert("Rota hesaplanırken bir hata oluştu. API'nin çalıştığından emin olun.");
+      alert("Seçilen noktalara araç rotası oluşturulamadı. Lütfen deniz üstü veya karayolu olmayan (ulaşılamaz) bir nokta seçmediğinizden emin olun.");
     } finally {
       setIsLoading(false);
     }
