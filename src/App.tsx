@@ -10,7 +10,7 @@ import AboutPage from './pages/AboutPage';
 import BlogPage from './pages/BlogPage';
 import BlogArticlePage from './pages/BlogArticlePage';
 import DownloadPage from './pages/DownloadPage';
-import { BrandDetailPage } from './pages/BrandDetailPage';
+
 import NotFoundPage from './pages/NotFoundPage';
 import RehberRedirect from './pages/RehberRedirect';
 import YeniliklerPage from './pages/YeniliklerPage';

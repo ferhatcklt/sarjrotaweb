@@ -192,7 +192,7 @@ export const BrandDetailPage = () => {
                     ),
                     p: ({node, children, ...props}) => {
                       // Check if it's an italic-only paragraph (used as notes/disclaimers)
-                      const isNote = node?.children?.length === 1 && node.children[0]?.tagName === 'em';
+                      const isNote = node?.children?.length === 1 && (node.children[0] as any)?.tagName === 'em';
                       if (isNote) {
                         return (
                           <div className="not-prose my-8 flex items-start gap-3 bg-amber-50 dark:bg-amber-900/10 border border-amber-200 dark:border-amber-800/30 rounded-xl p-4 text-sm text-amber-800 dark:text-amber-300">
@@ -206,7 +206,7 @@ export const BrandDetailPage = () => {
                     ul: ({node, ...props}) => (
                       <ul className="not-prose space-y-3 mb-10" {...props} />
                     ),
-                    ol: ({node, children, ...props}) => {
+                    ol: ({children}) => {
                       // Wrap ordered list items with counter
                       let counter = 0;
                       const enhancedChildren = Array.isArray(children)
@@ -225,7 +225,7 @@ export const BrandDetailPage = () => {
                         : children;
                       return <div className="space-y-3 mb-10">{enhancedChildren}</div>;
                     },
-                    li: ({node, children, ...props}) => (
+                    li: ({children}) => (
                       <li className="flex items-start gap-3 bg-slate-50 dark:bg-slate-800/40 rounded-xl p-4 border border-slate-100 dark:border-slate-700/50 transition-colors hover:bg-slate-100 dark:hover:bg-slate-800/60">
                         <span className="flex-shrink-0 w-6 h-6 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mt-0.5 shadow-sm shadow-blue-500/20">
                           <svg className="w-3.5 h-3.5 text-white" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>

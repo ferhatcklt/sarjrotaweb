@@ -1,4 +1,4 @@
-import { AlertTriangle, ShieldAlert, Bell, Car, Timer } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import BlogCTA from './components/BlogCTA';
 
 export default function SarjIstasyonuIsgalCezasi() {
