@@ -9,11 +9,27 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-// Statik blog slug'larını build sırasında üret
+// Marka slug'ları
+const BRAND_SLUGS = [
+  'zes', 'esarj', 'trugo', 'tesla', 'voltrun', 'sharznet',
+  'astor', 'ovolt', 'neva', 'wat-mobilite', 'en-yakit',
+  'aksa-sarj', 'rst-chargepoint',
+];
+
+// Build zamanında bulunamayan slug'lar runtime'da da çalışsın
+export const dynamicParams = true;
+
+// Statik blog + marka slug'larını build sırasında üret
 export async function generateStaticParams() {
-  return BLOG_POSTS.map((post) => ({
+  const blogSlugs = BLOG_POSTS.map((post) => ({
     slug: post.slug,
   }));
+
+  const brandSlugs = BRAND_SLUGS.map((brand) => ({
+    slug: `${brand}-sarj-istasyonlari`,
+  }));
+
+  return [...blogSlugs, ...brandSlugs];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
