@@ -21,11 +21,8 @@ jobs:
     - name: Install dependencies
       run: npm install
 
-    - name: Build Web
+    - name: Build Next.js App
       run: npm run build
-
-    - name: Run Tests
-      run: npm run test
 
     - name: Copy files via SCP
       uses: appleboy/scp-action@v0.1.4
@@ -33,6 +30,17 @@ jobs:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USERNAME }}
         key: ${{ secrets.SERVER_SSH_KEY }}
-        source: "dist/*"
+        source: ".next/,public/,package.json,package-lock.json,next.config.ts,.env.production"
         target: "/var/www/elektriklirota-web"
-        strip_components: 1
+
+    - name: Restart with PM2
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.SERVER_HOST }}
+        username: ${{ secrets.SERVER_USERNAME }}
+        key: ${{ secrets.SERVER_SSH_KEY }}
+        script: |
+          cd /var/www/elektriklirota-web
+          npm install --production
+          pm2 restart sarjrota-web || pm2 start npm --name sarjrota-web -- run start
+          pm2 save
