@@ -38,24 +38,50 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   // Marka sayfası mı?
   if (slug.endsWith('-sarj-istasyonlari')) {
     const brandSlug = slug.replace('-sarj-istasyonlari', '');
+    
+    const formattedBrandNames: Record<string, string> = {
+      'zes': 'ZES',
+      'esarj': 'Eşarj',
+      'trugo': 'Trugo',
+      'tesla': 'Tesla',
+      'voltrun': 'Voltrun',
+      'sharznet': 'Sharz.net',
+      'astor': 'Astor Şarj',
+      'ovolt': 'Ovolt',
+      'neva': 'Neva Şarj',
+      'wat-mobilite': 'WAT Mobilite',
+      'en-yakit': 'En Yakıt',
+      'aksa-sarj': 'Aksa Şarj',
+      'rst-chargepoint': 'RST Chargepoint',
+    };
+
+    const formattedName = formattedBrandNames[brandSlug] || (brandSlug.charAt(0).toUpperCase() + brandSlug.slice(1));
+    const title = `${formattedName} Şarj İstasyonları, Fiyatları ve Konumları 2026 | ŞarjRota`;
+    const description = `${formattedName} elektrikli araç (EV) şarj istasyonu sayısı, AC/DC soket bilgileri, 2026 güncel şarj fiyatları ve ödeme sistemleri hakkında detaylı bilgi.`;
+    const canonical = `https://www.sarjrota.com.tr/blog/${slug}`;
+    const openGraph = {
+      type: 'article',
+      images: [`/blog-images/${brandSlug}-sarj-istasyonlari.jpg`],
+    };
+
     try {
       const res = await fetch(`${API_BASE}/api/Stations/brands/${brandSlug}/statistics`, { next: { revalidate: 3600 } });
       if (res.ok) {
-        const stats = await res.json();
+        await res.json();
         return {
-          title: `${stats.brandName} Şarj İstasyonları, Fiyatları ve Konumları 2026 | ŞarjRota`,
-          description: `${stats.brandName} elektrikli araç (EV) şarj istasyonu sayısı, AC/DC soket bilgileri, 2026 güncel şarj fiyatları ve ödeme sistemleri hakkında detaylı bilgi.`,
-          openGraph: {
-            type: 'article',
-            images: [`/blog-images/${stats.brandSlug}-sarj-istasyonlari.jpg`],
-          },
-          alternates: { canonical: `https://www.sarjrota.com.tr/blog/${slug}` },
+          title,
+          description,
+          openGraph,
+          alternates: { canonical },
         };
       }
     } catch {}
+
     return {
-      title: `${brandSlug} Şarj İstasyonları 2026 | ŞarjRota`,
-      description: `${brandSlug} şarj istasyonları hakkında güncel bilgiler.`,
+      title,
+      description,
+      openGraph,
+      alternates: { canonical },
     };
   }
 
