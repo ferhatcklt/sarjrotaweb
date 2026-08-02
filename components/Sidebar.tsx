@@ -1,11 +1,12 @@
 'use client';
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { useAppStore } from '@/store/useAppStore';
 import type { Vehicle, RouteAlternative } from '@/store/useAppStore';
-import { Settings, MapPin, Battery, Info, Search, Plug, X, Moon, Sun } from 'lucide-react';
+import { Settings, MapPin, Battery, Info, Search, Plug, X, Moon, Sun, Loader2, ArrowUpDown } from 'lucide-react';
+import { useLocationSearch, type SearchResult } from '@/lib/useLocationSearch';
 
 const CONNECTOR_TYPES = [
   { key: 'AC',  label: 'AC',     desc: 'Yavaş / Normal' },
@@ -25,6 +26,8 @@ export const Sidebar = () => {
     selectedVehicle,
     selectedStationBrands,
     setSelectedVehicle,
+    setStartLocation,
+    setEndLocation,
     toggleStationBrand,
     setRouteData,
     routeSummary,
@@ -47,6 +50,84 @@ export const Sidebar = () => {
   const [connectorTypes, setConnectorTypes] = useState<string[]>([]);
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [stationBrands, setStationBrands] = useState<string[]>([]);
+
+  // ── Konum Arama (Geocoding) ──
+  const startSearch = useLocationSearch(350);
+  const endSearch = useLocationSearch(350);
+  const [startInputValue, setStartInputValue] = useState('');
+  const [endInputValue, setEndInputValue] = useState('');
+  const [showStartResults, setShowStartResults] = useState(false);
+  const [showEndResults, setShowEndResults] = useState(false);
+  const startDropdownRef = useRef<HTMLDivElement>(null);
+  const endDropdownRef = useRef<HTMLDivElement>(null);
+
+  // Haritadan tıklanarak konum seçildiğinde input değerini güncelle
+  useEffect(() => {
+    if (startLocation && !startSearch.query) {
+      setStartInputValue(`${startLocation.lat.toFixed(4)}, ${startLocation.lng.toFixed(4)}`);
+    }
+  }, [startLocation]);
+
+  useEffect(() => {
+    if (endLocation && !endSearch.query) {
+      setEndInputValue(`${endLocation.lat.toFixed(4)}, ${endLocation.lng.toFixed(4)}`);
+    }
+  }, [endLocation]);
+
+  // Dropdown dışına tıklayınca kapat
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (startDropdownRef.current && !startDropdownRef.current.contains(e.target as Node)) {
+        setShowStartResults(false);
+      }
+      if (endDropdownRef.current && !endDropdownRef.current.contains(e.target as Node)) {
+        setShowEndResults(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  const handleStartSearchChange = useCallback((value: string) => {
+    setStartInputValue(value);
+    startSearch.setQuery(value);
+    setShowStartResults(value.length >= 2);
+    if (value.length < 2) setShowStartResults(false);
+  }, [startSearch]);
+
+  const handleEndSearchChange = useCallback((value: string) => {
+    setEndInputValue(value);
+    endSearch.setQuery(value);
+    setShowEndResults(value.length >= 2);
+    if (value.length < 2) setShowEndResults(false);
+  }, [endSearch]);
+
+  const handleSelectStartResult = useCallback((result: SearchResult) => {
+    setStartInputValue(result.displayName.split(',').slice(0, 2).join(','));
+    setStartLocation({ lat: result.lat, lng: result.lng, name: result.displayName });
+    setShowStartResults(false);
+    startSearch.clear();
+    // Başlangıç seçildi, varışa geç
+    if (!endLocation) setSelectingMode('end');
+  }, [setStartLocation, endLocation, setSelectingMode, startSearch]);
+
+  const handleSelectEndResult = useCallback((result: SearchResult) => {
+    setEndInputValue(result.displayName.split(',').slice(0, 2).join(','));
+    setEndLocation({ lat: result.lat, lng: result.lng, name: result.displayName });
+    setShowEndResults(false);
+    endSearch.clear();
+    setSelectingMode(null);
+  }, [setEndLocation, setSelectingMode, endSearch]);
+
+  // Başlangıç ↔ Varış yer değiştir
+  const handleSwapLocations = useCallback(() => {
+    const tmpLoc = startLocation;
+    const tmpInput = startInputValue;
+    setStartLocation(endLocation);
+    setEndLocation(tmpLoc);
+    setStartInputValue(endInputValue);
+    setEndInputValue(tmpInput);
+  }, [startLocation, endLocation, startInputValue, endInputValue, setStartLocation, setEndLocation]);
 
   // API'den araçları ve istasyon markalarını çek
   useEffect(() => {
@@ -206,7 +287,13 @@ export const Sidebar = () => {
             </h2>
             {(startLocation || endLocation || route.length > 0) && (
               <button
-                onClick={resetRoute}
+                onClick={() => {
+                  resetRoute();
+                  setStartInputValue('');
+                  setEndInputValue('');
+                  startSearch.clear();
+                  endSearch.clear();
+                }}
                 className="text-xs font-medium text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 transition-colors"
               >
                 Temizle
@@ -216,57 +303,119 @@ export const Sidebar = () => {
           <div className="flex flex-col gap-3 relative">
             <div className="absolute left-[11px] top-4 bottom-4 w-0.5 bg-gray-200 dark:bg-slate-700" />
             {/* Başlangıç */}
-            <div
-              className="flex items-center gap-3 relative z-10 cursor-pointer group"
-              onClick={() => setSelectingMode('start')}
-            >
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 transition-all ${
-                selectingMode === 'start' ? 'bg-brand-500 border-brand-600 scale-110 shadow-md' : 'bg-brand-100 dark:bg-slate-800 border-brand-500 dark:border-brand-600'
-              }`}>
+            <div className="flex items-center gap-3 relative z-20" ref={startDropdownRef}>
+              <div
+                className={`w-6 h-6 rounded-full flex items-center justify-center border-2 transition-all shrink-0 cursor-pointer ${
+                  selectingMode === 'start' ? 'bg-brand-500 border-brand-600 scale-110 shadow-md' : 'bg-brand-100 dark:bg-slate-800 border-brand-500 dark:border-brand-600'
+                }`}
+                onClick={() => setSelectingMode('start')}
+              >
                 <div className={`w-2 h-2 rounded-full ${selectingMode === 'start' ? 'bg-white' : 'bg-brand-600 dark:bg-brand-400'}`} />
               </div>
-              <div className="flex-1">
-                <input
-                  type="text"
-                  placeholder="Başlangıç (Tıklayıp haritadan seç)"
-                  value={startLocation ? `${startLocation.lat.toFixed(3)}, ${startLocation.lng.toFixed(3)}` : ''}
-                  readOnly
-                  className={`w-full bg-gray-50 dark:bg-slate-800 border rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white cursor-pointer transition-all ${
-                    selectingMode === 'start'
-                      ? 'border-brand-500 ring-2 ring-brand-200 dark:ring-brand-900/50 bg-brand-50 dark:bg-brand-900/20'
-                      : 'border-gray-200 dark:border-slate-700 hover:border-brand-300 dark:hover:border-brand-600'
-                  }`}
-                />
+              <div className="flex-1 relative">
+                <div className="relative">
+                  <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500 pointer-events-none" />
+                  {startSearch.isSearching && (
+                    <Loader2 size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-brand-500 animate-spin" />
+                  )}
+                  <input
+                    type="text"
+                    placeholder="Başlangıç yaz veya haritadan seç"
+                    value={startInputValue}
+                    onChange={(e) => handleStartSearchChange(e.target.value)}
+                    onFocus={() => {
+                      setSelectingMode('start');
+                      if (startSearch.results.length > 0) setShowStartResults(true);
+                    }}
+                    className={`w-full bg-gray-50 dark:bg-slate-800 border rounded-lg pl-9 pr-3 py-2 text-sm text-slate-900 dark:text-white transition-all ${
+                      selectingMode === 'start'
+                        ? 'border-brand-500 ring-2 ring-brand-200 dark:ring-brand-900/50 bg-brand-50 dark:bg-brand-900/20'
+                        : 'border-gray-200 dark:border-slate-700 hover:border-brand-300 dark:hover:border-brand-600'
+                    }`}
+                  />
+                </div>
+                {/* Arama Sonuçları Dropdown */}
+                {showStartResults && startSearch.results.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl shadow-xl overflow-hidden z-50 backdrop-blur-sm max-h-52 overflow-y-auto">
+                    {startSearch.results.map((result, i) => (
+                      <button
+                        key={`start-${i}-${result.lat}`}
+                        onClick={() => handleSelectStartResult(result)}
+                        className="w-full text-left px-3 py-2.5 hover:bg-brand-50 dark:hover:bg-brand-900/20 transition-colors flex items-start gap-2.5 border-b border-gray-100 dark:border-slate-700/50 last:border-0"
+                      >
+                        <MapPin size={14} className="text-brand-500 mt-0.5 shrink-0" />
+                        <span className="text-xs text-gray-700 dark:text-slate-300 leading-snug line-clamp-2">{result.displayName}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
+            {/* Yer Değiştir Butonu */}
+            {(startLocation || endLocation) && (
+              <div className="flex justify-center -my-1 relative z-[15]">
+                <button
+                  onClick={handleSwapLocations}
+                  className="p-1.5 rounded-full bg-gray-100 dark:bg-slate-800 hover:bg-brand-100 dark:hover:bg-brand-900/40 border border-gray-200 dark:border-slate-700 transition-all hover:scale-110 shadow-sm"
+                  title="Başlangıç ve varışı değiştir"
+                >
+                  <ArrowUpDown size={14} className="text-gray-500 dark:text-slate-400" />
+                </button>
+              </div>
+            )}
             {/* Varış */}
-            <div
-              className="flex items-center gap-3 relative z-10 cursor-pointer group"
-              onClick={() => setSelectingMode('end')}
-            >
-              <div className={`w-6 h-6 rounded-full flex items-center justify-center border-2 transition-all ${
-                selectingMode === 'end' ? 'bg-red-500 border-red-600 scale-110 shadow-md' : 'bg-red-100 dark:bg-slate-800 border-red-500 dark:border-red-800'
-              }`}>
+            <div className="flex items-center gap-3 relative z-10" ref={endDropdownRef}>
+              <div
+                className={`w-6 h-6 rounded-full flex items-center justify-center border-2 transition-all shrink-0 cursor-pointer ${
+                  selectingMode === 'end' ? 'bg-red-500 border-red-600 scale-110 shadow-md' : 'bg-red-100 dark:bg-slate-800 border-red-500 dark:border-red-800'
+                }`}
+                onClick={() => setSelectingMode('end')}
+              >
                 <div className={`w-2 h-2 rounded-full ${selectingMode === 'end' ? 'bg-white' : 'bg-red-600 dark:bg-red-500'}`} />
               </div>
-              <div className="flex-1">
-                <input
-                  type="text"
-                  placeholder="Varış (Tıklayıp haritadan seç)"
-                  value={endLocation ? `${endLocation.lat.toFixed(3)}, ${endLocation.lng.toFixed(3)}` : ''}
-                  readOnly
-                  className={`w-full bg-gray-50 dark:bg-slate-800 border rounded-lg px-3 py-2 text-sm text-slate-900 dark:text-white cursor-pointer transition-all ${
-                    selectingMode === 'end'
-                      ? 'border-red-500 ring-2 ring-red-200 dark:ring-red-900/50 bg-red-50 dark:bg-red-900/20'
-                      : 'border-gray-200 dark:border-slate-700 hover:border-red-300 dark:hover:border-red-600'
-                  }`}
-                />
+              <div className="flex-1 relative">
+                <div className="relative">
+                  <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500 pointer-events-none" />
+                  {endSearch.isSearching && (
+                    <Loader2 size={14} className="absolute right-3 top-1/2 -translate-y-1/2 text-red-500 animate-spin" />
+                  )}
+                  <input
+                    type="text"
+                    placeholder="Varış yaz veya haritadan seç"
+                    value={endInputValue}
+                    onChange={(e) => handleEndSearchChange(e.target.value)}
+                    onFocus={() => {
+                      setSelectingMode('end');
+                      if (endSearch.results.length > 0) setShowEndResults(true);
+                    }}
+                    className={`w-full bg-gray-50 dark:bg-slate-800 border rounded-lg pl-9 pr-3 py-2 text-sm text-slate-900 dark:text-white transition-all ${
+                      selectingMode === 'end'
+                        ? 'border-red-500 ring-2 ring-red-200 dark:ring-red-900/50 bg-red-50 dark:bg-red-900/20'
+                        : 'border-gray-200 dark:border-slate-700 hover:border-red-300 dark:hover:border-red-600'
+                    }`}
+                  />
+                </div>
+                {/* Arama Sonuçları Dropdown */}
+                {showEndResults && endSearch.results.length > 0 && (
+                  <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-slate-800 border border-gray-200 dark:border-slate-700 rounded-xl shadow-xl overflow-hidden z-50 backdrop-blur-sm max-h-52 overflow-y-auto">
+                    {endSearch.results.map((result, i) => (
+                      <button
+                        key={`end-${i}-${result.lat}`}
+                        onClick={() => handleSelectEndResult(result)}
+                        className="w-full text-left px-3 py-2.5 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors flex items-start gap-2.5 border-b border-gray-100 dark:border-slate-700/50 last:border-0"
+                      >
+                        <MapPin size={14} className="text-red-500 mt-0.5 shrink-0" />
+                        <span className="text-xs text-gray-700 dark:text-slate-300 leading-snug line-clamp-2">{result.displayName}</span>
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
             {/* Seçim modu ipucu */}
             {selectingMode && (
               <p className="text-xs text-center animate-pulse mt-1" style={{ color: selectingMode === 'start' ? '#0d9488' : '#ef4444' }}>
-                📍 Haritaya tıklayarak {selectingMode === 'start' ? 'başlangıç' : 'varış'} noktasını seçin
+                📍 Yazarak arayın veya haritaya tıklayarak {selectingMode === 'start' ? 'başlangıç' : 'varış'} noktasını seçin
               </p>
             )}
           </div>
