@@ -1,0 +1,15 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls",
+      "delegate_permission/common.get_login_creds"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "tr.com.sarjrota",
+      "sha256_cert_fingerprints": [
+        "8A:40:BC:89:5E:10:C1:9B:46:1A:CD:2B:0F:ED:36:31:A9:CD:7C:8A:A5:FD:F9:F6:78:53:97:4D:0C:2A"
+      ]
+    }
+  }
+]
