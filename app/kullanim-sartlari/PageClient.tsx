@@ -84,12 +84,23 @@ export default function TermsOfService() {
               ŞarjRota, bakım, güncelleme veya teknik sorunlar nedeniyle hizmeti önceden haber vermeksizin geçici olarak durdurabilir. Bu durumlardan kaynaklanan zararlardan sorumlu tutulamaz.
             </p>
 
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white mt-8 mb-4">8. Değişiklikler</h2>
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-white mt-8 mb-4">8. ŞarjRota Pro (Premium Abonelik) Şartları</h2>
+            <ul className="mb-4 text-slate-600 dark:text-slate-300 leading-relaxed list-disc pl-6 space-y-2">
+              <li><strong>Abonelik Seçenekleri:</strong> Uygulama içerisinde aylık, yıllık veya ömür boyu (tek seferlik ödeme) premium seçenekleri sunulmaktadır.</li>
+              <li><strong>Ödeme:</strong> Ödemeler, satın alma işleminin onaylanması ile birlikte iTunes / Google Play hesabınızdan tahsil edilecektir.</li>
+              <li><strong>Otomatik Yenileme:</strong> Aylık ve yıllık abonelikler, mevcut dönemin bitiminden en az 24 saat önce otomatik yenileme kapatılmadığı sürece otomatik olarak yenilenir.</li>
+              <li><strong>Yenileme Ücreti:</strong> Mevcut dönemin bitimine 24 saat kala, hesabınızdan yenileme ücreti tahsil edilecek ve yenileme maliyeti belirlenecektir.</li>
+              <li><strong>Abonelik Yönetimi:</strong> Kullanıcılar aboneliklerini yönetebilir ve satın alma işleminden sonra cihazlarındaki Hesap Ayarları'na giderek otomatik yenilemeyi kapatabilirler.</li>
+              <li><strong>İptal:</strong> Aktif abonelik dönemi boyunca mevcut aboneliğin iptaline izin verilmez. İptal işlemi, bir sonraki fatura döneminden itibaren geçerli olur.</li>
+              <li><strong>Deneme Sürümü:</strong> Ücretsiz deneme süresinin kullanılmayan kısımları (eğer sunulmuşsa), kullanıcı bir abonelik satın aldığında kaybedilecektir.</li>
+            </ul>
+
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-white mt-8 mb-4">9. Değişiklikler</h2>
             <p className="mb-4 text-slate-600 dark:text-slate-300 leading-relaxed">
               ŞarjRota önceden haber vermeksizin sistemin işleyişini, algoritmasını veya bu kullanım şartlarını değiştirme hakkını saklı tutar. Güncel şartlar bu sayfada yayınlanır.
             </p>
 
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white mt-8 mb-4">9. Uygulanacak Hukuk</h2>
+            <h2 className="text-xl font-semibold text-slate-900 dark:text-white mt-8 mb-4">10. Uygulanacak Hukuk</h2>
             <p className="mb-4 text-slate-600 dark:text-slate-300 leading-relaxed">
               Bu kullanım şartları Türkiye Cumhuriyeti kanunlarına tabidir. Olası uyuşmazlıklarda Türkiye Cumhuriyeti mahkemeleri yetkilidir.
             </p>
